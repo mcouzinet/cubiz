@@ -91,6 +91,10 @@ var user = new Users({
 	Timeline    : new Array(),
 	Cubes		: new Array(),
 });
+
+//user.save(function (err) { if (err) console.log('mongo: ', err); });
+
+
 user.save(function (err) { if (err) console.log('mongo: ', err); });
   res.render('addUser',{
 	title: 'addUser'
