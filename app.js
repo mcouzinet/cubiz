@@ -128,6 +128,18 @@ app.get('/addUser', function(req, res){
   });
 });
 
+app.post('/login', function(req, res){
+  Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
+	if (err) console.log('login: ', err);
+	if (user) {
+	  console.log('user: ', user.idsocle);
+	}else{
+	  console.log('mauvais pass');
+	}
+  });
+
+});
+
 app.get('/login', function(req, res){
   res.render('login',{
 	title: 'login'
