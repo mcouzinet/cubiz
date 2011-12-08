@@ -75,7 +75,7 @@ app.configure(function(){
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Express'
+    title: "cubi'z"
   });
 });
 
@@ -129,9 +129,12 @@ app.get('/addUser', function(req, res){
 });
 
 app.post('/login', function(req, res){
+  console.log(req.cookies.rememberme);
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
 	if (err) console.log('login: ', err);
 	if (user) {
+	  res.cookie('rememberme', 'yes', { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  res.render('login',{title: 'login'});
 	  console.log('user: ', user.idsocle);
 	}else{
 	  console.log('mauvais pass');

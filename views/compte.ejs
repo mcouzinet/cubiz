@@ -1,0 +1,33 @@
+
+<p>Liste des objets</p>
+<% for(var i=0; i<objet.length; i++) {%>
+	<div class="link">
+		<div class="score deux <%- links[i].catégorie %>">
+			<div class="titre"><a href="http://www.wact.fr:3000/Act/<%- links[i].title %>"><%- links[i].title %></a></div>
+			<div class="footer-link">
+				<div class="postor">Par <a href="#"><%- links[i].author %></a> il y a <%- links[i].temps.d %> <%- links[i].temps.f %></div>
+				<div class="nbcom"><a href="#" title="commentaires du lien"><%- links[i].comments.length %> commentaires</a></div>
+				<span class="source"><%- links[i].source %></span>
+			</div>
+			<span class="cat"><%- links[i].catégorie %></span>
+			<span class="poid"><%- links[i].score %></span>
+		</div>
+	</div>
+<% } %>
+
+
+<p>Liste des messages</p>
+<% for(var i=0; i<messages.length; i++) {%>
+	<div class="link">
+		<div class="score deux <%- links[i].catégorie %>">
+			<div class="titre"><a href="http://www.wact.fr:3000/Act/<%- links[i].title %>"><%- links[i].title %></a></div>
+			<div class="footer-link">
+				<div class="postor">Par <a href="#"><%- links[i].author %></a> il y a <%- links[i].temps.d %> <%- links[i].temps.f %></div>
+				<div class="nbcom"><a href="#" title="commentaires du lien"><%- links[i].comments.length %> commentaires</a></div>
+				<span class="source"><%- links[i].source %></span>
+			</div>
+			<span class="cat"><%- links[i].catégorie %></span>
+			<span class="poid"><%- links[i].score %></span>
+		</div>
+	</div>
+<% } %>
