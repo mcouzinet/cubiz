@@ -23,20 +23,21 @@ var message = new Schema({
   date      : Date
 });
 
+var socle = new Schema({
+  id    	: Number,
+  Cubes		: [cube]
+});
+
 var user = new Schema({
   nom    	: String,
   prenom    : String,
-  idsocle   : Number,
+  idsocle   : [socle],
   mail      : String,
   tel		: Number,
   twitter	: String,
   facebook  : String,
+  mdp		: String,
   Timeline  : [message]
-});
-
-var socle = new Schema({
-  id    	: Number,
-  Cubes		: [cube]
 });
 
 var Socles = mongoose.model('socle', socle);
@@ -78,24 +79,32 @@ app.get('/', function(req, res){
   });
 });
 
-app.get('/addUser', function(req, res){
-  res.render('addUser',{
-	title: 'addUser'
+app.post('/admin', function(req, res){
+  var cube1 = new Cubes({id : req.param('Cube1'),rfid : req.param('rfid1'),titre : 'Votre Premier Cube',contenu : 'La phrase de votre premier cube'});
+  var cube2 = new Cubes({id : req.param('Cube2'),rfid : req.param('rfid2'),titre : 'Votre second Cube',contenu : 'La phrase de votre second cube'});
+  var cube3 = new Cubes({id : req.param('Cube3'),rfid : req.param('rfid3'),titre : 'Votre troisième Cube',contenu : 'La phrase de votre troisième cube'});
+  var cube4 = new Cubes({id : req.param('Cube4'),rfid : req.param('rfid4'),titre : 'Votre quatrième Cube',contenu : 'La phrase de votre quatrième cube'});
+  var cube5 = new Cubes({id : req.param('Cube5'),rfid : req.param('rfid5'),titre : 'Votre cinquième Cube',contenu : 'La phrase de votre cinquième cube'});
+  cube1.save(function (err) { if (err) console.log('mongo: ', err); });
+  cube2.save(function (err) { if (err) console.log('mongo: ', err); });
+  cube3.save(function (err) { if (err) console.log('mongo: ', err); });
+  cube4.save(function (err) { if (err) console.log('mongo: ', err); });
+  cube5.save(function (err) { if (err) console.log('mongo: ', err); });
+  var cubes = new Array(cube1,cube2, cube3, cube4, cube5);
+  var socle = new Socles({id : req.param('idSocle'),Cubes : cubes});
+  socle.save(function (err) { if (err) console.log('mongo: ', err); });
+  res.render('admin',{
+	title: 'admin'
+  });
+})
+
+app.get('/admin', function(req, res){
+  res.render('admin',{
+	title: 'admin'
   });
 });
 
-app.get('/admin', function(req, res){
-  res.render('admin');
-})
-
 app.post('/addUser', function(req, res){
-  for(var i=0;i<5;i++){
-	var cube = new Cubes({
-	  id     	: Number,
-	  titre     : String,
-	  contenu   : String
-	});
-  }
   var user = new Users({ 
     nom    		: req.param('nom'),
     prenom      : req.param('prenom'),
@@ -104,12 +113,24 @@ app.post('/addUser', function(req, res){
 	tel		    : req.param('tel'),
 	twitter		: req.param('twitter'),
 	facebook    : req.param('facebook'),
-	Timeline    : new Array(),
-	Cubes		: new Array(),
+	mdp		    : req.param('password'),
+	Timeline    : new Array()
   });
   user.save(function (err) { if (err) console.log('mongo: ', err); });
   res.render('addUser',{
 	title: 'addUser'
+  });
+});
+
+app.get('/addUser', function(req, res){
+  res.render('addUser',{
+	title: 'addUser'
+  });
+});
+
+app.get('/login', function(req, res){
+  res.render('login',{
+	title: 'login'
   });
 });
 
