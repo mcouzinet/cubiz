@@ -11,15 +11,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var cube = new Schema({
-  id     	: Number,
   rfid		: Number,
+  couleur	: String,
   titre     : String,
   contenu   : String
 });
 
 var message = new Schema({
   texte  	: String,
-  idsocle	: Number,
+  cube		: Number,
   date      : Date
 });
 
@@ -31,7 +31,7 @@ var socle = new Schema({
 var user = new Schema({
   nom    	: String,
   prenom    : String,
-  idsocle   : [socle],
+  cubes     : [cube],
   mail      : String,
   tel		: Number,
   twitter	: String,
@@ -40,10 +40,10 @@ var user = new Schema({
   Timeline  : [message]
 });
 
-var Socles = mongoose.model('socle', socle);
-var Messages = mongoose.model('message', message);
-var Cubes = mongoose.model('cube', cube);
-var Users = mongoose.model('user', user);
+var Socles = mongoose.model('socle', socle),
+	Messages = mongoose.model('message', message),
+	Cubes = mongoose.model('cube', cube),
+	Users = mongoose.model('user', user);
 mongoose.connect('mongodb://92.243.19.190/baby');
 
 /**
@@ -74,17 +74,39 @@ app.configure(function(){
  */
 
 app.get('/', function(req, res){
+  req.cookies.rememberme
   res.render('index', {
     title: "cubi'z"
   });
 });
 
+//Permet la création en base de donnée des lots de cubes.
 app.post('/admin', function(req, res){
-  var cube1 = new Cubes({id : req.param('Cube1'),rfid : req.param('rfid1'),titre : 'Votre Premier Cube',contenu : 'La phrase de votre premier cube'});
-  var cube2 = new Cubes({id : req.param('Cube2'),rfid : req.param('rfid2'),titre : 'Votre second Cube',contenu : 'La phrase de votre second cube'});
-  var cube3 = new Cubes({id : req.param('Cube3'),rfid : req.param('rfid3'),titre : 'Votre troisième Cube',contenu : 'La phrase de votre troisième cube'});
-  var cube4 = new Cubes({id : req.param('Cube4'),rfid : req.param('rfid4'),titre : 'Votre quatrième Cube',contenu : 'La phrase de votre quatrième cube'});
-  var cube5 = new Cubes({id : req.param('Cube5'),rfid : req.param('rfid5'),titre : 'Votre cinquième Cube',contenu : 'La phrase de votre cinquième cube'});
+  var cube1 = new Cubes({
+	rfid : req.param('rfid1'),
+	couleur : 'bleu',
+	titre : 'Votre Premier Cube',
+	contenu : 'La phrase de votre premier cube'});
+  var cube2 = new Cubes({
+	rfid : req.param('rfid2'),
+	couleur : 'vert',
+	titre : 'Votre second Cube',
+	contenu : 'La phrase de votre second cube'});
+  var cube3 = new Cubes({
+	rfid : req.param('rfid3'),
+	couleur : 'rouge',
+	titre : 'Votre troisième Cube',
+	contenu : 'La phrase de votre troisième cube'});
+  var cube4 = new Cubes({
+	rfid : req.param('rfid4'),
+	couleur : 'violet',
+	titre : 'Votre quatrième Cube',
+	contenu : 'La phrase de votre quatrième cube'});
+  var cube5 = new Cubes({
+	rfid : req.param('rfid5'),
+	couleur : 'orange',
+	titre : 'Votre cinquième Cube',
+	contenu : 'La phrase de votre cinquième cube'});
   cube1.save(function (err) { if (err) console.log('mongo: ', err); });
   cube2.save(function (err) { if (err) console.log('mongo: ', err); });
   cube3.save(function (err) { if (err) console.log('mongo: ', err); });
@@ -100,23 +122,26 @@ app.post('/admin', function(req, res){
 
 app.get('/admin', function(req, res){
   res.render('admin',{
-	title: 'admin'
+	title: 'admin',
   });
 });
 
 app.post('/addUser', function(req, res){
-  var user = new Users({ 
-    nom    		: req.param('nom'),
-    prenom      : req.param('prenom'),
-	idsocle     : req.param('idsocle'),
-	mail        : req.param('mail'),
-	tel		    : req.param('tel'),
-	twitter		: req.param('twitter'),
-	facebook    : req.param('facebook'),
-	mdp		    : req.param('password'),
-	Timeline    : new Array()
+  Socles.findOne({id:req.param('idsocle')},function(err,socle){
+	if (err) console.log('login: ', err); 
+    var user = new Users({ 
+      nom    	  : req.param('nom'),
+      prenom      : req.param('prenom'),
+	  cubes       : socle.Cubes,
+	  mail        : req.param('mail'),
+	  tel		  : req.param('tel'),
+	  twitter	  : req.param('twitter'),
+	  facebook    : req.param('facebook'),
+	  mdp		  : req.param('password'),
+	  Timeline    : new Array()
   });
   user.save(function (err) { if (err) console.log('mongo: ', err); });
+  });
   res.render('addUser',{
 	title: 'addUser'
   });
@@ -129,7 +154,6 @@ app.get('/addUser', function(req, res){
 });
 
 app.post('/login', function(req, res){
-
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
 	if (err) console.log('login: ', err);
 	if (user) {
@@ -138,10 +162,32 @@ app.post('/login', function(req, res){
 	  console.log('user: ', user.idsocle);
 	}else{
 	  console.log('mauvais pass');
+	  res.render('login',{title: 'login'});
 	}
   });
 
 });
+
+app.get('/rfid', function(req, res){
+  var a = 1111;
+  Cubes.findOne({rfid:a},function(err,cube){
+	if (err) console.log('login: ', err);
+	console.log(cube);
+	Users.findOne({'cubes._id':cube._id},function(err,user){
+	  if (err) console.log('login: ', err);
+	  var message = new Messages({
+	  texte   : cube.contenu,
+	  cube	  : Number,
+	  date    : new Date(Date.now())
+	});
+	  console.log(user);
+	});
+  });
+  res.render('index',{
+	title: 'index'
+  });
+});
+
 
 app.get('/login', function(req, res){
   res.render('login',{
