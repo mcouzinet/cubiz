@@ -129,7 +129,7 @@ app.get('/addUser', function(req, res){
 });
 
 app.post('/login', function(req, res){
-  console.log(req.cookies.rememberme);
+
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
 	if (err) console.log('login: ', err);
 	if (user) {
