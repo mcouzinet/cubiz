@@ -93,8 +93,18 @@ app.get('/', function(req, res){
   });
 });
 
-app.post('/', function(req, res){
+app.post('/arduino', function(req, res){
   console.log('Connection');
+  res.render('arduino', {
+    title: "cubi'z"
+  });
+});
+
+app.get('/arduino', function(req, res){
+  console.log('Connection');
+  res.render('arduino', {
+    title: "cubi'z"
+  });
 });
 
 //Permet la création en base de donnée des lots de cubes.
