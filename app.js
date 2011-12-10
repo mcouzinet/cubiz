@@ -55,6 +55,8 @@ mongoose.connect('mongodb://92.243.19.190/baby');
 var express = require('express'),
     _ = require('underscore'),
 	nodemailer = require('nodemailer'),
+	sys = require('sys'),
+	twitter = require('twitter'),
     path = require('path'),
     url = require('url'),
 	app = module.exports = express.createServer(),
@@ -81,28 +83,19 @@ nodemailer.SMTP = {
     pass: 'iec560'
 }
 
+var twit = new twitter({
+    consumer_key: 'uDFoqEA5FS2J0tBkYMVzQ',
+    consumer_secret: '5UATjbwPmeDSZFuIcX7UvpvOEN10SLXcOURoMNQs',
+    access_token_key: '55886140-eK8v3XduGrYh7ll0aXlaYnqKeiP1i7hmJQTDjI9NN',
+    access_token_secret: 'eEB8YC2NHdYABsnjPqksrtk6T5HexTd5hEvi6olWbk'
+});
+
 /**
  *  Routes
  */
 
 app.get('/', function(req, res){
-  console.log('Connection');
-  req.cookies.rememberme
   res.render('index', {
-    title: "cubi'z"
-  });
-});
-
-app.post('/arduino', function(req, res){
-  console.log('Connection');
-  res.render('arduino', {
-    title: "cubi'z"
-  });
-});
-
-app.get('/arduino', function(req, res){
-  console.log('Connection');
-  res.render('arduino', {
     title: "cubi'z"
   });
 });
@@ -221,38 +214,32 @@ app.get('/rfid', function(req, res){
 	  user.Timeline.push(message);
 	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  if(cube.twitter){
-		console.log('twitter');
-/*		var options = {
-		  host: url,
-		  port: 80,
-		  path: '/resource?id=foo&bar=baz',
-		  method: 'POST'
-		};
-
-		http.request(options, function(res) {
-		  console.log('STATUS: ' + res.statusCode);
-		  console.log('HEADERS: ' + JSON.stringify(res.headers));
-		  res.setEncoding('utf8');
-		  res.on('data', function (chunk) {
-		    console.log('BODY: ' + chunk);
-		  });
-		}).end();*/
+		twit.newDirectMessage(user.twitter,cube.content,function(){
+			console.log('fds');
+		});
 	  };
 	  if(cube.email){
 		mail_data = {
-		    sender:'messages@cubiz.com',
-		    to:'mcouzinet@gmail.com',
-		    subject:'Testing NodeMailer',
-			body:'COUCCCOUUUUUU SOHETICCCCCC :)'
+			sender: 'mcouzinet@gmail.com',
+		    to:user.mail,
+		    subject:'Cubiz : Un nouveau message de votre enfant !',
+			body:cube.contenu
 		}
 		nodemailer.send_mail(mail_data, function(error, success){
 	        console.log('Email ' + success ? 'sent' : 'failed');
 	    });
 	  };
-	  if(cube.sms){
-		
+	  if(false/*cube.sms*/){
+		mail_data = {
+			sender: 'mcouzinet@gmail.com',
+		    to:'sms@smsbox.fr',
+		    subject:'login=mcouzinet&pass=iec560&dest='+user.tel+'&origine=Cubiz&mode=Expert&notif=0',
+			body:cube.contenu
+		}
+		nodemailer.send_mail(mail_data, function(error, success){
+	        console.log('SMS ' + success ? 'sms-sent' : 'sms-failed');
+	    });		
 	  };
-	  console.log(message);
 	});
   });
   res.render('index',{

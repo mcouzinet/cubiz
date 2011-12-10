@@ -8,5 +8,7 @@
   	, "ejs": ">= 0.0.1"
 	, "mongoose": ">= 1.7.x"
 	, "socket.io": ">= 0.7.7"
+	, "twitter": ">= 0.1.17"
+	, "nodemailer": ">= 0.2.4"
   }
 }
