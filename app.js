@@ -13,7 +13,9 @@ var Schema = mongoose.Schema;
 var cube = new Schema({
   rfid		: Number,
   couleur	: String,
-  titre     : String,
+  twitter   : Boolean,
+  sms		: Boolean,
+  email		: Boolean,
   contenu   : String
 });
 
@@ -52,6 +54,7 @@ mongoose.connect('mongodb://92.243.19.190/baby');
 
 var express = require('express'),
     _ = require('underscore'),
+	nodemailer = require('nodemailer'),
     path = require('path'),
     url = require('url'),
 	app = module.exports = express.createServer(),
@@ -69,11 +72,21 @@ app.configure(function(){
   app.use(express.session({ secret: 'secretKey' }));
 });
 
+nodemailer.SMTP = {
+    host: 'smtp.gmail.com',
+    port: 465,
+    ssl: true,
+    use_authentication: true,
+    user: 'mcouzinet@gmail.com',
+    pass: 'iec560'
+}
+
 /**
  *  Routes
  */
 
 app.get('/', function(req, res){
+  console.log('Connection');
   req.cookies.rememberme
   res.render('index', {
     title: "cubi'z"
@@ -85,33 +98,43 @@ app.post('/admin', function(req, res){
   var cube1 = new Cubes({
 	rfid : req.param('rfid1'),
 	couleur : 'bleu',
-	titre : 'Votre Premier Cube',
+    twitter : true,
+    sms		: false,
+    email	: true,
 	contenu : 'La phrase de votre premier cube'});
   var cube2 = new Cubes({
 	rfid : req.param('rfid2'),
 	couleur : 'vert',
-	titre : 'Votre second Cube',
+    twitter : true,
+    sms		: false,
+    email	: true,
 	contenu : 'La phrase de votre second cube'});
   var cube3 = new Cubes({
 	rfid : req.param('rfid3'),
 	couleur : 'rouge',
-	titre : 'Votre troisième Cube',
+    twitter : true,
+    sms		: false,
+    email	: true,
 	contenu : 'La phrase de votre troisième cube'});
   var cube4 = new Cubes({
 	rfid : req.param('rfid4'),
 	couleur : 'violet',
-	titre : 'Votre quatrième Cube',
+    twitter : true,
+    sms		: false,
+    email	: true,
 	contenu : 'La phrase de votre quatrième cube'});
   var cube5 = new Cubes({
 	rfid : req.param('rfid5'),
 	couleur : 'orange',
-	titre : 'Votre cinquième Cube',
+    twitter : true,
+    sms		: false,
+    email	: true,
 	contenu : 'La phrase de votre cinquième cube'});
-  cube1.save(function (err) { if (err) console.log('mongo: ', err); });
-  cube2.save(function (err) { if (err) console.log('mongo: ', err); });
-  cube3.save(function (err) { if (err) console.log('mongo: ', err); });
-  cube4.save(function (err) { if (err) console.log('mongo: ', err); });
-  cube5.save(function (err) { if (err) console.log('mongo: ', err); });
+  cube1.save(function (err){ if (err) console.log('mongo: ', err); });
+  cube2.save(function (err){ if (err) console.log('mongo: ', err); });
+  cube3.save(function (err){ if (err) console.log('mongo: ', err); });
+  cube4.save(function (err){ if (err) console.log('mongo: ', err); });
+  cube5.save(function (err){ if (err) console.log('mongo: ', err); });
   var cubes = new Array(cube1,cube2, cube3, cube4, cube5);
   var socle = new Socles({id : req.param('idSocle'),Cubes : cubes});
   socle.save(function (err) { if (err) console.log('mongo: ', err); });
@@ -169,25 +192,59 @@ app.post('/login', function(req, res){
 });
 
 app.get('/rfid', function(req, res){
-  var a = 1111;
+  var a = 3333;
   Cubes.findOne({rfid:a},function(err,cube){
-	if (err) console.log('login: ', err);
+	if (err) console.log('mongo: ', err);
 	console.log(cube);
 	Users.findOne({'cubes._id':cube._id},function(err,user){
-	  if (err) console.log('login: ', err);
+	  if (err) console.log('mongo: ', err);
 	  var message = new Messages({
-	  texte   : cube.contenu,
-	  cube	  : Number,
-	  date    : new Date(Date.now())
-	});
-	  console.log(user);
+	    texte   : cube.contenu,
+	    cube	: Number,
+	    date    : new Date(Date.now())
+	  });
+	  message.save(function (err) { if (err) console.log('mongo: ', err); });
+	  user.Timeline.push(message);
+	  user.save(function (err) { if (err) console.log('mongo: ', err); });
+	  if(cube.twitter){
+		console.log('twitter');
+/*		var options = {
+		  host: url,
+		  port: 80,
+		  path: '/resource?id=foo&bar=baz',
+		  method: 'POST'
+		};
+
+		http.request(options, function(res) {
+		  console.log('STATUS: ' + res.statusCode);
+		  console.log('HEADERS: ' + JSON.stringify(res.headers));
+		  res.setEncoding('utf8');
+		  res.on('data', function (chunk) {
+		    console.log('BODY: ' + chunk);
+		  });
+		}).end();*/
+	  };
+	  if(cube.email){
+		mail_data = {
+		    sender:'messages@cubiz.com',
+		    to:'mcouzinet@gmail.com',
+		    subject:'Testing NodeMailer',
+			body:'COUCCCOUUUUUU SOHETICCCCCC :)'
+		}
+		nodemailer.send_mail(mail_data, function(error, success){
+	        console.log('Email ' + success ? 'sent' : 'failed');
+	    });
+	  };
+	  if(cube.sms){
+		
+	  };
+	  console.log(message);
 	});
   });
   res.render('index',{
 	title: 'index'
   });
 });
-
 
 app.get('/login', function(req, res){
   res.render('login',{
