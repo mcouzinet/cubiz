@@ -93,6 +93,10 @@ app.get('/', function(req, res){
   });
 });
 
+app.post('/', function(req, res){
+  console.log('Connection');
+});
+
 //Permet la création en base de donnée des lots de cubes.
 app.post('/admin', function(req, res){
   var cube1 = new Cubes({
