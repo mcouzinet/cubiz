@@ -48,6 +48,8 @@ var Socles = mongoose.model('socle', socle),
 	Users = mongoose.model('user', user);
 mongoose.connect('mongodb://92.243.19.190/baby');
 
+
+
 /**
  *  Modules
  */
@@ -55,13 +57,24 @@ mongoose.connect('mongodb://92.243.19.190/baby');
 var express = require('express'),
     _ = require('underscore'),
 	nodemailer = require('nodemailer'),
-	sys = require('sys'),
-	twitter = require('twitter'),
     path = require('path'),
     url = require('url'),
+    https = require('https'),
 	app = module.exports = express.createServer(),
     io = require('socket.io').listen(app);
 
+	var everyauth = require('everyauth')
+	  , connect = require('connect');
+
+	everyauth.helpExpress(app);
+
+	  	everyauth.twitter
+		  .consumerKey('Nh7jZwAgXd6wxxu2gTazg')
+		  .consumerSecret('nFLwxaOS5mygGz0hd3zyaAtTtfZWF06bMjBFOYP0')
+		  .findOrCreateUser( function (session, accessToken, accessTokenSecret, twitterUserMetadata) {
+		    return usersByTwitId[twitUser.id] || (usersByTwitId[twitUser.id] = addUser('twitter', twitUser));
+		  })
+		  .redirectPath('/');
 // Configuration
 app.configure(function(){
   app.use(express.bodyParser());
@@ -75,20 +88,20 @@ app.configure(function(){
 });
 
 nodemailer.SMTP = {
-    host: 'smtp.gmail.com',
-    port: 465,
-    ssl: true,
-    use_authentication: true,
-    user: 'mcouzinet@gmail.com',
-    pass: 'iec560'
+  host: 'smtp.gmail.com',
+  port: 465,
+  ssl: true,
+  use_authentication: true,
+  user: 'lescubz@gmail.com',
+  pass: 'equipe04'
 }
 
-var twit = new twitter({
-    consumer_key: 'uDFoqEA5FS2J0tBkYMVzQ',
-    consumer_secret: '5UATjbwPmeDSZFuIcX7UvpvOEN10SLXcOURoMNQs',
-    access_token_key: '55886140-eK8v3XduGrYh7ll0aXlaYnqKeiP1i7hmJQTDjI9NN',
-    access_token_secret: 'eEB8YC2NHdYABsnjPqksrtk6T5HexTd5hEvi6olWbk'
-});
+var twit = {
+  consumer_key: 'uDFoqEA5FS2J0tBkYMVzQ',
+  consumer_secret: '5UATjbwPmeDSZFuIcX7UvpvOEN10SLXcOURoMNQs',
+  access_token_key: '55886140-eK8v3XduGrYh7ll0aXlaYnqKeiP1i7hmJQTDjI9NN',
+  access_token_secret: 'eEB8YC2NHdYABsnjPqksrtk6T5HexTd5hEvi6olWbk'
+};
 
 /**
  *  Routes
@@ -214,8 +227,14 @@ app.get('/rfid', function(req, res){
 	  user.Timeline.push(message);
 	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  if(cube.twitter){
-		twit.newDirectMessage(user.twitter,cube.content,function(){
-			console.log('fds');
+		/*
+		  CODE POUR TWITTER :(
+		*/
+		var request = client.request('POST', 'https://api.twitter.com/1/direct_messages/new.json');
+		request.write("stuff");
+		request.end();
+		request.on("response", function (response) {
+		    // handle the response
 		});
 	  };
 	  if(cube.email){
@@ -258,3 +277,4 @@ app.get('/login', function(req, res){
  */
 
 app.listen(3000);
+
