@@ -48,8 +48,6 @@ var Socles = mongoose.model('socle', socle),
 	Users = mongoose.model('user', user);
 mongoose.connect('mongodb://92.243.19.190/baby');
 
-
-
 /**
  *  Modules
  */
@@ -63,18 +61,6 @@ var express = require('express'),
 	app = module.exports = express.createServer(),
     io = require('socket.io').listen(app);
 
-	var everyauth = require('everyauth')
-	  , connect = require('connect');
-
-	everyauth.helpExpress(app);
-
-	  	everyauth.twitter
-		  .consumerKey('Nh7jZwAgXd6wxxu2gTazg')
-		  .consumerSecret('nFLwxaOS5mygGz0hd3zyaAtTtfZWF06bMjBFOYP0')
-		  .findOrCreateUser( function (session, accessToken, accessTokenSecret, twitterUserMetadata) {
-		    return usersByTwitId[twitUser.id] || (usersByTwitId[twitUser.id] = addUser('twitter', twitUser));
-		  })
-		  .redirectPath('/');
 // Configuration
 app.configure(function(){
   app.use(express.bodyParser());
@@ -95,13 +81,6 @@ nodemailer.SMTP = {
   user: 'lescubz@gmail.com',
   pass: 'equipe04'
 }
-
-var twit = {
-  consumer_key: 'uDFoqEA5FS2J0tBkYMVzQ',
-  consumer_secret: '5UATjbwPmeDSZFuIcX7UvpvOEN10SLXcOURoMNQs',
-  access_token_key: '55886140-eK8v3XduGrYh7ll0aXlaYnqKeiP1i7hmJQTDjI9NN',
-  access_token_secret: 'eEB8YC2NHdYABsnjPqksrtk6T5HexTd5hEvi6olWbk'
-};
 
 /**
  *  Routes
@@ -211,6 +190,11 @@ app.post('/login', function(req, res){
 
 });
 
+app.post('/rfid', function(req, res){
+  rfid = req.param('rfid');
+  console.log('rfid');
+});
+
 app.get('/rfid', function(req, res){
   var a = 3333;
   Cubes.findOne({rfid:a},function(err,cube){
@@ -230,12 +214,6 @@ app.get('/rfid', function(req, res){
 		/*
 		  CODE POUR TWITTER :(
 		*/
-		var request = client.request('POST', 'https://api.twitter.com/1/direct_messages/new.json');
-		request.write("stuff");
-		request.end();
-		request.on("response", function (response) {
-		    // handle the response
-		});
 	  };
 	  if(cube.email){
 		mail_data = {
