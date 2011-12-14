@@ -203,7 +203,7 @@ app.post('/login', function(req, res){
 	console.log('cherhc');
 	if (err) console.log('login: ', err);
 	if (user) {
-	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
 	  res.render('login',{title: 'login'});
 	  console.log('user: ', user.idsocle);
 	}else{
@@ -297,7 +297,7 @@ app.get('/Mes_actualites', function(req, res){
 	if (err) console.log('login: ', err);
 	if (user) {
 	  // On rafraichit le cookies
-	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
 	  // On Cherches les messages de l'utilisateur
    	  Messages.find({iduser:user._id}).limit(10).desc("date").run(function(err, mes) {		
 		if (err) console.log('login: ', err);
@@ -374,7 +374,7 @@ app.get('/Mes_cubz', function(req, res){
 	if (err) console.log('login: ', err);
 	if (user) {
 	  // On rafraichit le cookies
-	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
 	  //On affiche la page
 	  res.render('mescubz',{
 		title: "Mes cub'Z",
@@ -401,7 +401,7 @@ app.get('/Mes_infos', function(req, res){
 	if (err) console.log('login: ', err);
 	if (user) {
 	  // On rafraichit le cookies
-	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
 	  //On affiche la page
 	  res.render('mesinfos',{
 		title: 'Mes informations',

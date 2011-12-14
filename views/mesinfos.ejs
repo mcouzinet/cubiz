@@ -1,44 +1,50 @@
 <div id="content" class="wrapper clearfix">
-	<section class="colonnes">
-		<div id="mesinfos">
-		<h2>Mes infos</h2><span> - Modification des paramètres</span>
-		<div class="box-infos clearfix">
-			<div class="infos-gauche">
-				<span>Prénom</span></br>
-				<span>Nom</span></br>
-				<span>ID Socle</span>
-			</div>
-			<div class="infos-droite">
-				<span><%- user.prenom %></span></br>
-				<span><%- user.nom %></span></br>
-				<span>098 987 876 654</span>
-			</div>	
-		</div>				
-		<div class="box-infos clearfix">
-			<div class="infos-gauche">
-				<span>Adresse de connexion</span></br>
-				<span>Mot de passe</span>
-			</div>
-			<div class="infos-droite">
-				<span><%- user.mail %></span></br>
-				<span>xxxxxxxxx</span>
-			</div>	
-		</div>
-		<div class="box-infos clearfix">
-			<span>ADRESSES CUBI'Z</span>
-			<ul>
-				<li>@<%- user.twitter %></li>
-				<li><%- user.mail %></li>
-				<li><%- user.tel %></li>
-			</ul>							
-		</div>
-		
-		</div>
-	</section>
+	<h2>Mes infos</h2><span> - Modification des paramètres</span>
 	<section class="colonnes">
 		<div class="pub">
 			<a href="http://www.vertbaudet.fr/" title='verbaudet'><img src="img/vertbaudet.jpg" alt="publicité nestlé"></a>
-		</div>
-	</section>	
+		</div>	
+	</section>
+	<section class="colonnes">
+		<form action="/mesinfos" method="post" autocomplete="on" id="mesinfos">
 
+		<div class="box-infos clearfix">
+			<div class="infos-gauche">
+				<span>Prénom</span><br>
+				<span>Nom</span><br>
+				<hr>
+				<span>Adresse de connexion</span><br>
+				<hr>
+				<span>Ancien mot de passe</span><br>
+				<span>Nouveau mot de passe</span><br>
+				<span>Confirmation</span>
+			</div>
+			<div class="infos-droite">
+				<span><input type="text" name="prenom" value="<%- user.prenom %>" class="champ"></span></br>
+				<span><input type="text" name="nom" value="<%- user.nom %>" class="champ"></span></br>
+				<hr>
+				<span><input type="mail" name="prenom" value="<%- user.mail %>" class="champ"></span></br>
+				<hr>
+				<span><input type="mail" name="prenom" value="" class="champ"></span></br>
+				<span><input type="mail" name="prenom" value="" class="champ"></span></br>
+				<span><input type="mail" name="prenom" value="" class="champ"></span>
+			</div>	
+			<div class="infos-gauche">
+
+			</div>
+			<div class="infos-droite">
+
+			</div>	
+		</div>
+		<div class="box-infos clearfix">
+			<span>Adresses cubi'Z</span>
+			<ul>
+				<li>@<span><input type="mail" name="prenom" value="<%- user.twitter %>" class="champ"></span></li>
+				<li><span><input type="mail" name="prenom" value="<%- user.mail %>" class="champ"></span></li>
+				<li><span><input type="mail" name="prenom" value="<%- user.tel %>" class="champ"></span></li>
+			</ul>							
+		</div>
+		
+		</form>
+	</section>
 </div>

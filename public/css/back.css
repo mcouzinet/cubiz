@@ -236,7 +236,7 @@ body{
 	width: 100%;
 }
 header {
-	background: url('../assets/img/nuage_bleu.png') repeat-x;
+	background: url('../assets/img/nuage_bleu.png') repeat-x  left 20px ;
 	height: 145px;
 }
 
@@ -247,6 +247,8 @@ header {
 /* mise en place du logo */
 header .wrapper img {
 	float: left;
+	position:relative;
+	z-index:20;
 }
 header span{
 	float: left;
@@ -258,8 +260,16 @@ header span{
 	color: #08b1b1;
 }
 /* navigation */
-header {
-	
+#barre-haut{
+	height:20px;
+	background-color:#268194;
+	z-index:2;
+}
+#barre-haut a{
+	color:#d5eef3;
+	float:right;
+	text-decoration:none;
+	line-height:20px;
 }
 header nav{
 	margin: 0px auto;
@@ -363,12 +373,12 @@ h1 {
 
 #content h2 {
 	display: inline;
-	color: #1b9d9d;
+	color: #268194;
 }
 #content h2 + span  {
 	font-style:italic;
 	font-family: verdana;
-	color: #1b9d9d;
+	color: #267f93;
 }
 
 /* box mes cubz */
@@ -432,7 +442,7 @@ h1 {
 .cercle-social-afficher {
 	content:"";
 	position:absolute;
-	background-color: #08b1b1;
+	background-color: #268194;
 	height: 22px;
 	width: 22px;
 	-moz-border-radius:75px;
@@ -468,7 +478,6 @@ h1 {
 	margin-left: 7px;
 }
 #content section {
-	padding-bottom: 10px;
 	margin-bottom: 10px;
 }
 #content section + span {
@@ -504,13 +513,16 @@ h1 {
 
 .box-actu {
 	width: 80%;
-	background-color: #dff7f7;
-	box-shadow: 0px -1px 5px #d0d0d0;
-	-webkit-box-shadow: 0px -1px 5px #d0d0d0;
+	background-color: #d5eef3;
+	box-shadow: 0px -1px 1px #d0d0d0;
+	-webkit-box-shadow: 0px -1px 1px #d0d0d0;
 	margin: 7px 10% 4px 10%;
 	padding-top: 10px;
 	display: block;
 	position:relative;
+	-moz-border-radius:10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 .cube-actu{
 	background: url('../assets/img/cubes.png') no-repeat;
@@ -550,7 +562,7 @@ h1 {
 }
 .box-actu span.date{
 	padding-left: 67px;
-	color: #08b1b1;
+	color: #268094;
 	font-size: 1em;
 	display: block;
 	margin-bottom: -10px;
@@ -576,11 +588,10 @@ h1 {
 	color: #08b1b1;
 	font-family: verdana;
 	padding-top: 10px;
-	float:left;
 }	
 section .pub img{
 	float:right;
-	margin:30px;
+	margin:10px;
 	display:none;
 }
 /* bouton pour avoir plus d'actus */
@@ -590,7 +601,7 @@ section .bouton-actus{
 	background-color: #edffff;
 	height: 30px;
 	width: 30px;
-	border: solid 3px #78d0d0;
+	border: solid 3px #268194;
 	-moz-border-radius:75px;
 	-webkit-border-radius: 75px;
 	border-radius: 75px;
@@ -602,24 +613,29 @@ section .bouton-actus{
 
 #mesinfos{
 	float:left;
-	margin-top:30px;
 	width:65%;
 }
 
 .box-infos {
 	width: 90%;
-	background-color: #cbf0f0;
-	box-shadow: 0px -1px 5px #dedede;
-	-webkit-box-shadow: 0px -1px 5px #d0d0d0;
+	background-color: #d5eef3;
+	box-shadow: 0px -1px 1px #dedede;
+	-webkit-box-shadow: 0px -1px 1px #d0d0d0;
 	display: block;
 	margin-top: 10px;
 	padding: 10px 15px;
 	font-size: 1.059em;
 	font-family: Verdana;
+	-moz-border-radius:10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 
+.box-infos hr{
+	border-color: #79cedf;
+}
 .box-infos > span, .box-infos ul li {
-	color: #1b9d9d;
+	color: #268194;
 	padding-bottom: 15px;
 }
 .box-infos ul li:last-child {
@@ -627,12 +643,13 @@ section .bouton-actus{
 }
 .infos-gauche {
 	float: left;
-	width: 60%;
-	color: #38c0c0;
+	width: 40%;
+	color: #268194;
 }
 .infos-droite {
 	float: left;
-	color: #1b9d9d;
+	width: 60%;
+	color: #268194;
 }
 .box-infos ul li:first-child{
 	list-style: url("../assets/img/twitter.png");	
@@ -651,9 +668,14 @@ section .bouton-actus{
 	vertical-align: top;
 }
 .box-infos span {
-	line-height: 30px;
+	line-height: 40px;
 }
 
+.box-infos input{
+	background-color:#fff;
+	height:30px;
+	font-size:20px;
+}
 
 /* =============================================================================
    Non-semantic helper classes
@@ -700,7 +722,7 @@ section .bouton-actus{
   /* Style adjustments for viewports 768px and over go here */
 section .pub img{
 	float:right;
-	margin:30px 0;
+	margin:10px 0;
 	display:block;
 }
 #actu{
