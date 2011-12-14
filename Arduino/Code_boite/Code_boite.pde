@@ -2,14 +2,14 @@
 #include <Ethernet.h>
 #include <Client.h>
 // Adresse IP du serveur et Port d'écoute
-// 10,2,11,10  10,2,67,217
-byte server[] = {10,2,11,10};
-#define PORT 3128
+// 10,2,11,10  10,2,67,217   92.243.19.190
+byte server[] = {10,2,66,31};
+#define PORT 3000
 
 // Définition des attributs
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-byte ip[] = {10, 2, 67, 253 };
-byte gateway[] = {10,2,67,1}; 
+byte ip[] = {10, 2, 66, 30 };
+byte gateway[] = {10,2,66,1}; 
 Client client(server, PORT);
 char buffer[10];
 
@@ -40,7 +40,7 @@ void loop() {
     goPrint = false;
   }
   Serial.flush();
-  delay(100);
+  delay(1000);
 }
 
 // vérifie que le tag est valide
@@ -70,11 +70,10 @@ int sendID() {
     //printTag();
     sprintf(buffer,"{\"rfid\" : \"%x%x%x%x%x%x%x%x%x%x\"}",tagMem[0],tagMem[1],tagMem[2],tagMem[3],tagMem[4],tagMem[5],tagMem[6],tagMem[7],tagMem[8],tagMem[9]); 
     Serial.println(buffer);   
-    client.print("POST /rfid/ HTTP/1.1\n");
+    client.print("POST / HTTP/1.1\n");
     client.print("Host: http://www.cubiz.fr:3000\n");
-    client.println("'Content-Type': 'application/x-www-form-urlencoded'");
+    client.println("Content-Type:application/json");
     client.println("Cache-control: no-cache");
-    //client.println("Via 1.0 http-proxy-montreuil.ece.fr:3128 (squid/2.6.STABLE22)");  
     client.print("Content-Length: ");
     client.println(strlen(buffer),DEC);
     client.println();

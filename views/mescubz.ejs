@@ -1,116 +1,17 @@
-
 <div id="content" class="wrapper">
-	<h1>MES CUB'Z</h1>
-<!-- Pack 1 -->			
-	<h2>PACK 1</h2><span> - Cliquer l'encart pour modifier le message</span>
+	<h1>MES CUB'Z</h1><span> - Cliquer l'encart pour modifier le message</span>
 	<section class="clearfix">
 		<div class="colonnes">
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de dessiner. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis rentré de l'école. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>3-Maman, je voulais te dire que je t'aime. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>		
-		</div>
-		<div class="colonnes">
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de manger. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je vais me coucher. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-		</div>
-	</section>
-<!-- Pack 2 -->		
-	<h2>PACK 2</h2><span> - Cliquer l'encart pour modifier le message</span>
-	<section class="clearfix">		
-		<div class="colonnes">
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de dessiner. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de dessiner. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de dessiner. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>		
-		</div>
-		<div class="colonnes">
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de dessiner. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
-			<div class="box">
-				<span class="cube rouge"></span>
-				<p>Maman, je suis en train de dessiner. Je pense fort à toi. <i>Hugo</i></p>
-				<span class="twitter cercle-social-afficher"></span>
-				<span class="mail cercle-social-masquer"></span>
-				<span class="sms cercle-social-masquer"></span>
-			</div>
+			<% for(var i=0; i<cubes.length; i++) { %>
+				<div class="box">
+					<span class="cube <%- cubes[i].couleur %>"></span>
+					<p><%- cubes[i].contenu %></p>
+					<span class="twitter cercle-social-afficher"></span>
+					<span class="mail cercle-social-masquer"></span>
+					<span class="sms cercle-social-masquer"></span>
+				</div>
+			<% } %>
 		</div>
 	</section>
 <span><a href="#" title="Ajouter un pack">Ajouter un pack</a></span>				
-</div>	
-<footer>
-	<div class="wrapper">
-		<nav>
-			<ul>
-				<li><a href="#" title="">FAQ</a></li>
-				<li><a href="#" title="">Mentions légales</a></li>
-				<li><a href="#" title="">Fonctionnement</a></li>
-				<li><a href="#" title="">Des suggestions ?</a></li>
-				<li><a href="#" title="">Nous contacter</a></li>
-			</ul>
-			<ul>
-				<li><a href="#" title="">Accueil</a></li>
-				<li><a href="#" title="">Produit</a></li>
-				<li><a href="#" title="">Fonctionnement</a></li>
-				<li><a href="#" title="">Nous contacter</a></li>
-			</ul>
-			<ul>
-				<li><a href="#" title="">Mes actualités</a></li>
-				<li><a href="#" title="">Mes infos</a></li>
-				<li><a href="#" title="">Mes cub'z</a></li>
-			</ul>
-		</nav>	
-	</div>	
-</footer>		
 </div>	

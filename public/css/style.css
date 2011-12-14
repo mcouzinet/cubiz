@@ -212,13 +212,16 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* Kewl Script Font */
 @font-face {
 font-family: KewlScript;
-src: url("/assets/fonts/KewlScript.otf") format("opentype");
+src: url("../assets/fonts/KewlScript.otf") format("opentype");
 }
 @font-face {
 font-family: DINNeuzeitGroteskStd-Light;
-src: url("/assets/fonts/DINNeuzeitGroteskStd-Light.otf") format("opentype");
+src: url("../assets/fonts/DINNeuzeitGroteskStd-Light.otf") format("opentype");
 }
 
+html{
+	height: 100%;
+}
 
 body{
 	font-family:Helvetica, Helvetica Neue, Arial, sans-serif;
@@ -306,16 +309,16 @@ header > nav li:before {
 }
 
 header > nav li:first-child a {
-	background: url('/assets/img/accueil.png') no-repeat;
+	background: url('../assets/img/accueil.png') no-repeat;
 }
 header > nav li:nth-child(2) a {
-	background: url('/assets/img/fonctionnement.png') no-repeat;
+	background: url('../assets/img/fonctionnement.png') no-repeat;
 }
 header > nav li:nth-child(3) a {
-	background: url('/assets/img/produits.png') no-repeat;
+	background: url('../assets/img/produits.png') no-repeat;
 }
 header > nav li:last-child a {
-	background: url('/assets/img/contact.png') no-repeat;
+	background: url('../assets/img/contact.png') no-repeat;
 }
 
 header > hr {
@@ -332,6 +335,8 @@ footer{
 	height: 120px;
 	background-color: #e06961;
 	border-top: solid 1px #e44338;
+	position:absolute;
+	bottom:0px;
 }
 footer > nav ul li{
 	color: #f0f0f0;
@@ -499,7 +504,7 @@ article ul li.eco:before{
 	content:"";
 	height: 16px;
 	width: 10px;
-	background-image: url("/assets/img/eco.png"); 
+	background-image: url("../assets/img/eco.png"); 
 	position: absolute;
 	margin-left: -12px;
 	}
@@ -679,7 +684,7 @@ div.icone1
 	position: relative;
 	bottom: 370px;
 	right: 40px;
-	background-image: url('/assets/img/icone.png');
+	background-image: url('../assets/img/icone.png');
 	background-repeat: no-repeat;
 	background-position: center;
 }

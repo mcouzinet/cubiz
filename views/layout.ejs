@@ -22,19 +22,33 @@
 <body>
 	<header>
 		<div id="barre-haut"></div>
-		<div class="wrapper">	
-		<img src="img/logo.png" alt="logo cubiz" title="logo cubiz">
-		<span>Mon espace maman</span>
+		<div class="wrapper">
+			<div id="logo">
+				<a href="/" title="retour vers l'accueil"><img src="img/logo.png" alt="logo cubiz" title="logo cubiz"></a>
+			</div>
 			<nav>
 				<ul class="clearfix">
-					<li><a href="/Mes_actualites" title="">MES ACTUALITÉS</a></li>
-					<li><a href="/Mes_cubz" title="">MES CUB'Z</a></li>
-					<li><a href="/Mes_infos" title="">MES INFOS</a></li>				
+					<li><a href="/Mes_actualites" title="">Mes actualités</a></li>
+					<li><a href="/Mes_cubz" title="">Mes cub'Z</a></li>
+					<li><a href="/Mes_infos" title="">Mes infos</a></li>
+					<li><a href="/" title="">Déconnexion</a></li>				
 				</ul>		
 			</nav>
 		</div>		
 	</header>
+	
 	<%- body %>
+	<div id="bgfooter">
+	<footer>
+		<nav>
+			<a href="#" title="">FAQ</a>
+			<a href="#" title="">Mentions légales</a>
+			<a href="#" title="">Site Map</a>
+			<a href="#" title="">Des suggestions ?</a>
+			<a href="#" title="">Nous contacter</a>
+		</nav>	
+	</footer>
+	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 

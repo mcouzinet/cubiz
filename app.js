@@ -200,6 +200,7 @@ app.get('/addUser', function(req, res){
 *******************/
 app.post('/login', function(req, res){
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
+	console.log('cherhc');
 	if (err) console.log('login: ', err);
 	if (user) {
 	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 900000), httpOnly: true });
@@ -220,7 +221,7 @@ app.post('/rfid', function(req, res){
 });
 
 app.get('/rfid', function(req, res){
-  var a = 'rfid2';
+  var a = 'rfid5';
   Cubes.findOne({rfid:a},function(err,cube){
 	if (err) console.log('mongo: ', err);
 	console.log(cube);
@@ -283,7 +284,6 @@ app.get('/login', function(req, res){
 *   POST : Mes actualités   *
 ****************************/
 app.get('/Mes_actualites', function(req, res){
-  console.log('cookies = ' + req.cookies.rememberme);
   // Si il n'y à pas de cookie -> RETOUR ACCUEIL
   if(!req.cookies.rememberme){
 	  res.render('index',{
@@ -299,75 +299,119 @@ app.get('/Mes_actualites', function(req, res){
 	  // On rafraichit le cookies
 	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
 	  // On Cherches les messages de l'utilisateur
-	  
-		//.sort('date','descending').limit(5)
-   	  Messages.find({iduser:user._id},function(err, mes) {		
+   	  Messages.find({iduser:user._id}).limit(10).desc("date").run(function(err, mes) {		
 		if (err) console.log('login: ', err);
-		for(var i=0;i<mes.length;i++){
-			var message = new Object();
-			message.date = mes[i].date.getDate();
-			switch(mes[i].date.getDay()){
-				case 0:message.jour = 'Dimanche';break;
-				case 1:message.jour = 'Lundi';break;
-				case 2:message.jour = 'Mardi';break;
-				case 3:message.jour = 'Mercredi';break;
-				case 4:message.jour = 'Jeudi';break;
-				case 5:message.jour = 'Vendredi';break;
-				case 6:message.jour = 'Samedi';break;
-			};//end switch
-			switch(mes[i].date.getMonth()){
-				case 0:message.mois = 'Janvier';break;
-				case 1:message.mois = 'Février';break;
-				case 2:message.mois = 'Mars';break;
-				case 3:message.mois = 'Avril';break;
-				case 4:message.mois = 'Mai';break;
-				case 5:message.mois = 'Juin';break;
-				case 6:message.mois = 'Juillet';break;
-				case 7:message.mois = 'Aout';break;
-				case 8:message.mois = 'Septembre';break;
-				case 9:message.mois = 'Octobre';break;
-				case 10:message.mois = 'Novembre';break;
-				case 11:message.mois = 'Décembre';break;
-			};//end switch
-			message.heures = mes[i].date.getHours();
-			message.minutes = (mes[i].date.getMinutes()<10)?'0'+mes[i].date.getMinutes():mes[i].date.getMinutes();
-			message.message = mes[i].texte;
-			message.twitter = mes[i].twitter?'twitter':' ';
-			message.sms = mes[i].sms?'sms':' ';
-			message.mail = mes[i].mail?'mail':' ';			
-	 		TabMes.push(message);	
-		};//end for
-		res.render('mesactus',{
-	      title: 'Mes actualités',
-		  prenom: user.prenom,
-		  messages: TabMes
-	    });
-  	  }).asc('date');//end find messages
+		if(mes){
+			for(var i=0;i<mes.length;i++){
+				var message = new Object();
+				message.date = mes[i].date.getDate();
+				switch(mes[i].date.getDay()){
+					case 0:message.jour = 'Dimanche';break;
+					case 1:message.jour = 'Lundi';break;
+					case 2:message.jour = 'Mardi';break;
+					case 3:message.jour = 'Mercredi';break;
+					case 4:message.jour = 'Jeudi';break;
+					case 5:message.jour = 'Vendredi';break;
+					case 6:message.jour = 'Samedi';break;
+				};//end switch
+				switch(mes[i].date.getMonth()){
+					case 0:message.mois = 'Janvier';break;
+					case 1:message.mois = 'Février';break;
+					case 2:message.mois = 'Mars';break;
+					case 3:message.mois = 'Avril';break;
+					case 4:message.mois = 'Mai';break;
+					case 5:message.mois = 'Juin';break;
+					case 6:message.mois = 'Juillet';break;
+					case 7:message.mois = 'Aout';break;
+					case 8:message.mois = 'Septembre';break;
+					case 9:message.mois = 'Octobre';break;
+					case 10:message.mois = 'Novembre';break;
+					case 11:message.mois = 'Décembre';break;
+				};//end switch
+				message.heures = mes[i].date.getHours();
+				message.minutes = (mes[i].date.getMinutes()<10)?'0'+mes[i].date.getMinutes():mes[i].date.getMinutes();
+				message.message = mes[i].texte;
+				message.twitter = mes[i].twitter?'cercle-social-afficher':'cercle-social-masquer';
+				message.sms = mes[i].sms?'cercle-social-afficher':'cercle-social-masquer';
+				message.mail = mes[i].email?'cercle-social-afficher':'cercle-social-masquer';				
+				message.couleur = mes[i].couleur;	
+		 		TabMes.push(message);	
+			};//end for
+			res.render('mesactus',{
+		      title: 'Mes actualités',
+			  prenom: user.prenom,
+			  messages: TabMes
+		    });
+		}else{
+			res.render('mesactusVide',{
+		      title: 'Mes actualités',
+			  prenom: user.prenom,
+			  messages: TabMes
+		    });
+		}
+  	  });//end find messages
 	}else{
 	  // Le cookie ne corespond pas à un utilisateurs -> RETOUR ACCUEIL
-	  res.render('login',{title: 'login'});
+	  res.render('index',{title: 'index'});
 	};//end if user
   });//end fin user
+});
+
+/**********************
+*   POST : Mes cubZ   *
+**********************/
+app.get('/Mes_cubz', function(req, res){
+  // Si il n'y à pas de cookie -> RETOUR ACCUEIL
+  if(!req.cookies.rememberme){
+	console.log('pas de cookies');
+	res.render('index',{
+	  layout: 'layoutFront',
+	  title: 'index'
+	});//end of render
+  };//end of if
+  // On vérfie que le cookie correspond à la personne loger
+  Users.findOne({mail:req.cookies.rememberme},function(err,user){
+	if (err) console.log('login: ', err);
+	if (user) {
+	  // On rafraichit le cookies
+	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  //On affiche la page
+	  res.render('mescubz',{
+		title: "Mes cub'Z",
+		cubes: user.cubes
+  	  });
+	};
+  });
 });
 
 /******************************
 *   POST : Mes informations   *
 ******************************/
 app.get('/Mes_infos', function(req, res){
-  res.render('mesinfos',{
-	title: 'Mes informations',
+ // Si il n'y à pas de cookie -> RETOUR ACCUEIL
+  if(!req.cookies.rememberme){
+	console.log('pas de cookies');
+	res.render('index',{
+	  layout: 'layoutFront',
+	  title: 'index'
+	});//end of render
+  };//end of if
+  // On vérfie que le cookie correspond à la personne loger
+  Users.findOne({mail:req.cookies.rememberme},function(err,user){
+	if (err) console.log('login: ', err);
+	if (user) {
+	  // On rafraichit le cookies
+	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  //On affiche la page
+	  res.render('mesinfos',{
+		title: 'Mes informations',
+		user: user
+	  });
+	};
   });
 });
 
-app.get('/Mes_cubz', function(req, res){
-  res.render('mescubz',{
-	title: "Mes cub'Z",
-  });
-});
-
-/**
- *  Start
- */
-
+/***********
+*   Start  *
+***********/
 app.listen(3000);
-
