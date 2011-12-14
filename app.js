@@ -11,37 +11,42 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var cube = new Schema({
-  rfid		: Number,
-  couleur	: String,
-  twitter   : Boolean,
-  sms		: Boolean,
-  email		: Boolean,
-  contenu   : String
+  rfid		: String, 	//Tag RFID du cube
+  couleur	: String,	//Couleur du cube
+  twitter   : Boolean,	//Twitter valid ou non
+  sms		: Boolean,	//Sms valid ou non
+  email		: Boolean,	//Email valid ou non
+  contenu   : String	//Contenu du message
 });
 
 var message = new Schema({
-  texte  	: String,
-  cube		: Number,
-  date      : Date
+  iduser	: String,	//_id de l'user
+  texte  	: String,	//texte du message
+  couleur	: String,	//couleur du cube d'envoie
+  date      : Date,		//date de publication
+  twitter   : Boolean,	//Envoié aussi via twitter
+  sms		: Boolean,	//Envoié aussi par sms
+  email		: Boolean,	//Envoié aussi par email
 });
 
 var socle = new Schema({
-  id    	: Number,
-  Cubes		: [cube]
+  id    	: Number,	//Numéro de lot
+  Cubes		: [cube]	//Cube lié au socles
 });
 
 var user = new Schema({
-  nom    	: String,
-  prenom    : String,
-  cubes     : [cube],
-  mail      : String,
-  tel		: Number,
-  twitter	: String,
-  facebook  : String,
-  mdp		: String,
-  Timeline  : [message]
+  nom    	: String,	//Nom
+  prenom    : String,	//prénom
+  cubes     : [cube],	//Tous les cubes que la personne
+  mail      : String,	//le mail
+  tel		: Number,	//le tél
+  twitter	: String,	//le twitter
+  facebook  : String,	//le facebook
+  mdp		: String,	//le mdp
+  Timeline  : [message]	//Messages de l'utilisateur
 });
 
+//Création des modèles et connection 
 var Socles = mongoose.model('socle', socle),
 	Messages = mongoose.model('message', message),
 	Cubes = mongoose.model('cube', cube),
@@ -92,6 +97,10 @@ app.get('/', function(req, res){
   });
 });
 
+
+/********************
+*   POST : ADMIN    *
+********************/
 //Permet la création en base de donnée des lots de cubes.
 app.post('/admin', function(req, res){
   var cube1 = new Cubes({
@@ -140,14 +149,22 @@ app.post('/admin', function(req, res){
   res.render('admin',{
 	title: 'admin'
   });
-})
+});
 
+/*******************
+*   GET : ADMIN    *
+*******************/
+// Permet l'affichage d'ajout de socle
 app.get('/admin', function(req, res){
   res.render('admin',{
 	title: 'admin',
   });
 });
 
+/*********************
+*   POST : Adduser   *
+*********************/
+// Page de création de compte
 app.post('/addUser', function(req, res){
   Socles.findOne({id:req.param('idsocle')},function(err,socle){
 	if (err) console.log('login: ', err); 
@@ -169,17 +186,23 @@ app.post('/addUser', function(req, res){
   });
 });
 
+/********************
+*   GET : Adduser   *
+********************/
 app.get('/addUser', function(req, res){
   res.render('addUser',{
 	title: 'addUser'
   });
 });
 
+/*******************
+*   POST : Login   *
+*******************/
 app.post('/login', function(req, res){
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
 	if (err) console.log('login: ', err);
 	if (user) {
-	  res.cookie('rememberme', 'yes', { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 900000), httpOnly: true });
 	  res.render('login',{title: 'login'});
 	  console.log('user: ', user.idsocle);
 	}else{
@@ -190,22 +213,27 @@ app.post('/login', function(req, res){
 
 });
 
+
 app.post('/rfid', function(req, res){
   rfid = req.param('rfid');
   console.log('rfid');
 });
 
 app.get('/rfid', function(req, res){
-  var a = 3333;
+  var a = 'rfid2';
   Cubes.findOne({rfid:a},function(err,cube){
 	if (err) console.log('mongo: ', err);
 	console.log(cube);
 	Users.findOne({'cubes._id':cube._id},function(err,user){
 	  if (err) console.log('mongo: ', err);
 	  var message = new Messages({
+		iduser	: user._id,
 	    texte   : cube.contenu,
-	    cube	: Number,
-	    date    : new Date(Date.now())
+	    couleur	: cube.couleur,
+	    date    : new Date(Date.now()),
+	  	twitter : cube.twitter,
+	  	sms		: cube.sms,
+	  	email	: cube.email
 	  });
 	  message.save(function (err) { if (err) console.log('mongo: ', err); });
 	  user.Timeline.push(message);
@@ -215,7 +243,7 @@ app.get('/rfid', function(req, res){
 		  CODE POUR TWITTER :(
 		*/
 	  };
-	  if(cube.email){
+	  if(false/*cube.email*/){
 		mail_data = {
 			sender: 'mcouzinet@gmail.com',
 		    to:user.mail,
@@ -247,6 +275,93 @@ app.get('/rfid', function(req, res){
 app.get('/login', function(req, res){
   res.render('login',{
 	title: 'login'
+  });
+});
+
+
+/****************************
+*   POST : Mes actualités   *
+****************************/
+app.get('/Mes_actualites', function(req, res){
+  console.log('cookies = ' + req.cookies.rememberme);
+  // Si il n'y à pas de cookie -> RETOUR ACCUEIL
+  if(!req.cookies.rememberme){
+	  res.render('index',{
+		layout: 'layoutFront',
+		title: 'index'
+	  });
+  };
+  var TabMes = new Array();
+  // On vérfie que le cookie correspond à la personne loger
+  Users.findOne({mail:req.cookies.rememberme},function(err,user){
+	if (err) console.log('login: ', err);
+	if (user) {
+	  // On rafraichit le cookies
+	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 900000), httpOnly: true });
+	  // On Cherches les messages de l'utilisateur
+	  
+		//.sort('date','descending').limit(5)
+   	  Messages.find({iduser:user._id},function(err, mes) {		
+		if (err) console.log('login: ', err);
+		for(var i=0;i<mes.length;i++){
+			var message = new Object();
+			message.date = mes[i].date.getDate();
+			switch(mes[i].date.getDay()){
+				case 0:message.jour = 'Dimanche';break;
+				case 1:message.jour = 'Lundi';break;
+				case 2:message.jour = 'Mardi';break;
+				case 3:message.jour = 'Mercredi';break;
+				case 4:message.jour = 'Jeudi';break;
+				case 5:message.jour = 'Vendredi';break;
+				case 6:message.jour = 'Samedi';break;
+			};//end switch
+			switch(mes[i].date.getMonth()){
+				case 0:message.mois = 'Janvier';break;
+				case 1:message.mois = 'Février';break;
+				case 2:message.mois = 'Mars';break;
+				case 3:message.mois = 'Avril';break;
+				case 4:message.mois = 'Mai';break;
+				case 5:message.mois = 'Juin';break;
+				case 6:message.mois = 'Juillet';break;
+				case 7:message.mois = 'Aout';break;
+				case 8:message.mois = 'Septembre';break;
+				case 9:message.mois = 'Octobre';break;
+				case 10:message.mois = 'Novembre';break;
+				case 11:message.mois = 'Décembre';break;
+			};//end switch
+			message.heures = mes[i].date.getHours();
+			message.minutes = (mes[i].date.getMinutes()<10)?'0'+mes[i].date.getMinutes():mes[i].date.getMinutes();
+			message.message = mes[i].texte;
+			message.twitter = mes[i].twitter?'twitter':' ';
+			message.sms = mes[i].sms?'sms':' ';
+			message.mail = mes[i].mail?'mail':' ';			
+	 		TabMes.push(message);	
+		};//end for
+		res.render('mesactus',{
+	      title: 'Mes actualités',
+		  prenom: user.prenom,
+		  messages: TabMes
+	    });
+  	  }).asc('date');//end find messages
+	}else{
+	  // Le cookie ne corespond pas à un utilisateurs -> RETOUR ACCUEIL
+	  res.render('login',{title: 'login'});
+	};//end if user
+  });//end fin user
+});
+
+/******************************
+*   POST : Mes informations   *
+******************************/
+app.get('/Mes_infos', function(req, res){
+  res.render('mesinfos',{
+	title: 'Mes informations',
+  });
+});
+
+app.get('/Mes_cubz', function(req, res){
+  res.render('mescubz',{
+	title: "Mes cub'Z",
   });
 });
 
