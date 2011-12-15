@@ -369,8 +369,10 @@ app.get('/connexion', function(req, res){
 ******************/
 app.post('/rfid', function(req, res){
   rfid = req.param('rfid');
+  console.log(rfid);
   Cubes.findOne({rfid:a},function(err,cube){
 	if (err) console.log('mongo: ', err);
+	console.log('cubes trouver');
 	Users.findOne({'cubes._id':cube._id},function(err,user){
 	  if (err) console.log('mongo: ', err);
 		if(user){
