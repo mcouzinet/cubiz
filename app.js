@@ -91,7 +91,75 @@ nodemailer.SMTP = {
 *   POST : INDEX    *
 ********************/
 app.get('/', function(req, res){
-  res.render('index', {
+  if(!req.cookies.rememberme){
+	res.render('index',{
+	  layout: 'layoutFront',
+	  title: "cubi'z"
+	});
+  }else{
+    res.render('index', {
+      layout: 'layoutFront_co',
+      title: "cubi'z"
+    });
+  };
+});
+
+/*****************************
+*   POST : FONCTIONNEMENT    *
+*****************************/
+app.get('/fonctionnement', function(req, res){
+  res.render('fonctionnement', {
+	layout: 'layoutFront',
+    title: "cubi'z"
+  });
+});
+
+/***********************
+*   POST : PRODUITS    *
+***********************/
+app.get('/produits', function(req, res){
+  res.render('produits', {
+	layout: 'layoutFront',
+    title: "cubi'z"
+  });
+});
+
+/**********************
+*   POST : CONTACT    *
+**********************/
+app.get('/contact', function(req, res){
+  res.render('contact', {
+	layout: 'layoutFront',
+    title: "cubi'z"
+  });
+});
+
+/******************
+*   POST : FAQ    *
+******************/
+app.get('/faq', function(req, res){
+  res.render('faq', {
+	layout: 'layoutFront',
+    title: "cubi'z"
+  });
+});
+
+/***********************
+*   POST : MENTIONS    *
+***********************/
+app.get('/mentions', function(req, res){
+  res.render('mentions', {
+	layout: 'layoutFront',
+    title: "cubi'z"
+  });
+});
+
+
+/***********************
+*   POST : MENTIONS    *
+***********************/
+app.get('/plandusite', function(req, res){
+  res.render('plandusite', {
 	layout: 'layoutFront',
     title: "cubi'z"
   });
@@ -197,9 +265,8 @@ app.get('/addUser', function(req, res){
 /*******************
 *   POST : Login   *
 *******************/
-app.post('/login', function(req, res){
+app.post('/connection', function(req, res){
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
-	console.log('cherhc');
 	if (err) console.log('login: ', err);
 	if (user) {
 	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
@@ -214,36 +281,35 @@ app.post('/login', function(req, res){
 });
 
 
+/******************
+*   POST : RFID   *
+******************/
 app.post('/rfid', function(req, res){
   rfid = req.param('rfid');
-  console.log('rfid');
-});
-
-app.get('/rfid', function(req, res){
-  var a = 'rfid5';
   Cubes.findOne({rfid:a},function(err,cube){
 	if (err) console.log('mongo: ', err);
-	console.log(cube);
 	Users.findOne({'cubes._id':cube._id},function(err,user){
 	  if (err) console.log('mongo: ', err);
-	  var message = new Messages({
-		iduser	: user._id,
-	    texte   : cube.contenu,
-	    couleur	: cube.couleur,
-	    date    : new Date(Date.now()),
-	  	twitter : cube.twitter,
-	  	sms		: cube.sms,
-	  	email	: cube.email
-	  });
-	  message.save(function (err) { if (err) console.log('mongo: ', err); });
-	  user.Timeline.push(message);
-	  user.save(function (err) { if (err) console.log('mongo: ', err); });
+		if(user){
+	  	  var message = new Messages({
+			iduser	: user._id,
+	    	texte   : cube.contenu,
+	    	couleur	: cube.couleur,
+	    	date    : new Date(Date.now()),
+	  		twitter : cube.twitter,
+	  		sms		: cube.sms,
+	  		email	: cube.email
+	  	  });
+	  	  message.save(function (err) { if (err) console.log('mongo: ', err); });
+	  	  user.Timeline.push(message);
+	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
+	  	}
 	  if(cube.twitter){
 		/*
 		  CODE POUR TWITTER :(
 		*/
 	  };
-	  if(false/*cube.email*/){
+	  if(cube.email){
 		mail_data = {
 			sender: 'mcouzinet@gmail.com',
 		    to:user.mail,
@@ -254,7 +320,7 @@ app.get('/rfid', function(req, res){
 	        console.log('Email ' + success ? 'sent' : 'failed');
 	    });
 	  };
-	  if(false/*cube.sms*/){
+	  if(cube.sms){
 		mail_data = {
 			sender: 'mcouzinet@gmail.com',
 		    to:'sms@smsbox.fr',

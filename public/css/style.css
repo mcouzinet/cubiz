@@ -229,6 +229,10 @@ body{
 	text-align: justify;
 	}
 
+a{
+	color:#ffa8a8;
+	text-decoration:none;
+}
 
 
 /* boite de login*/
@@ -386,29 +390,43 @@ header .logo{
 	}
 
 /* mise en forme du footer */
-footer {
-
-	background: url('../img/nuage_footer_rose.png') repeat-x;
-	height: 95px;
-
-}
-
-footer nav {
-	padding-top: 60px;
-}
-footer nav #barre-footer {
-	background-color: #ff5866;
-	height: 25px;
-}
+/* footer */
 footer nav a {
-	color: #f6b5b5;
+	color: #fafafa;
 	font-family: verdana;
 	font-size: 1em;
 	text-decoration: none;
-	padding-left: 9%;
-	vertical-align: -5px;
+	padding-left: 5%;
+	padding-top: 30px;
 }
-
+footer nav{
+	margin:0 auto;
+	max-width:800px;
+}
+footer nav a:visited {
+	color: #fafafa;
+}
+#bgfooter{
+	margin-top:20px;
+	content:'';
+	display:block;
+	height:100px;
+	width:100%;
+	background: url('../assets/img/nuage_footer_rose.png') repeat-x left center;
+	position:relative;
+	bottom:0px;
+	z-index:1;
+}
+footer {
+	position:absolute;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	height: 20px;
+	background-color: #ff5765;
+	bottom:0px;
+	width:100%;
+	z-index:3;
+}
 .wrapper {
 	margin:0 auto;
 	max-width:960px;
@@ -892,6 +910,21 @@ div.cercle2
 	top: 220px;
 	left: 78%;
 } 
+/* Sitemap */
+ul.sitemap{
+padding-left: 10px;
+}
+ul.sitemap li{
+list-style-type:none;
+padding-bottom: 12px;
+}
+ ul.sitemap li a {
+    text-decoration: none;
+    list-style-type: none;
+    color: #268a9f;
+    font-size: 12px;
+    font-size: 1.1em;
+}
 
 /* mise en forme du formulaire de contact */
 form p.double {
