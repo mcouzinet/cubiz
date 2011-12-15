@@ -8,15 +8,21 @@
 	<section class="clearfix">
 		<div class="colonnes" id="mescubes">
 			<% for(var i=0; i<cubes.length; i++) { %>
-				<div class="boitecube">
+				<div class="boitecube" id="<%- cubes[i]._id %>">
 					<span class="groscube <%- cubes[i].couleur %>"></span>
-					<p><%- cubes[i].contenu %></p>
+					<div class="cubedetail">
+						<p><%- cubes[i].contenu %></p>
+						
+					</div>
+					<div id="supportcube">
 					<span class="twitter cercle-social-afficher"></span>
 					<span class="mail cercle-social-masquer"></span>
 					<span class="sms cercle-social-masquer"></span>
+					</div>
+					<div class="ecrit"></div>
 				</div>
 			<% } %>
+			<span id="ajoutpack"><a href="#" title="Ajouter un pack">Ajouter un pack</a></span>	
 		</div>
-	</section>
-<span><a href="#" title="Ajouter un pack">Ajouter un pack</a></span>				
+	</section>		
 </div>	

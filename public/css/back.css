@@ -385,6 +385,78 @@ h1 {
 
 #mescubes{
 	width:60%;
+	position:relative;
+}
+#mescubes hr{
+	margin:0;
+}
+#mescubes .boitecube{
+	position:relative;
+	height:90px;
+}
+#mescubes .ecrit{
+	background: url('../assets/img/mescubz.png') no-repeat 8px 14px;
+	height:50px;
+	width:40px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	background-color:#a7e3ed;
+	position:absolute;
+	right:-20px;
+	top:25px;
+}
+#mescubes #supportcube{
+	position:absolute;
+	top:22px;
+	right:120px;
+}
+#mescubes .boitecube p{
+	color:#268b9f;
+	padding:20px 120px 0 20px;
+	font-family:Helvetica, Helvetica Neue, Arial, sans-serif;
+	font-size:15px;
+	width:70%;
+	height:50px;
+	background-color: #d6f2f2;
+	-moz-border-radius:15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+}
+#mescubes .cubedetail{
+	position:absolute;
+	left:60px;
+	width:100%;
+}
+#mescubes .groscube{
+	position:absolute;
+	display:inline-block;
+	margin:15px 0;
+	width:60px;
+	height:60px;
+	overflow:hidden;
+	background: url('../assets/img/mescubz.png') no-repeat ;
+}
+#mescubes .rouge{
+	background-position:0px -28px;
+}
+#mescubes .vert{
+	background-position:0px -93px;
+}
+#mescubes .violet{
+	background-position:0px -157px;
+}
+#mescubes .bleu{
+	background-position:0px -221px;
+}
+#mescubes .orange{
+	background-position:0px -285px;
+}
+
+#mescubes 
+
+#mescubes .boitecube{
+	width:90%;
 }
 .box {
 	width: 445px;
@@ -489,25 +561,27 @@ h1 {
 	margin-bottom: 300px;
 }
 /* ajouter un pack */
-#content section + span:before {
+#ajoutpack {
 	content:"";
 	position:absolute;
-	background-color: #edffff;
+	left:45%;
+	display:block;
+	background-color: #268aa1;
 	height: 20px;
-	width: 20px;
-	border: solid 3px #78d0d0;
+	width: 150px;
+	border: solid 3px #268aa1;
 	-moz-border-radius:75px;
 	-webkit-border-radius: 75px;
 	border-radius: 75px;	
-	background: url('../assets/img/croix.png') no-repeat center;
-	margin-top: -3px;	
-	margin-left: -30px;
+	background: url('../assets/img/croix.png') no-repeat 5px;
+	margin:30px auto;
 }
-#content section + span a {
-		color: #08b1b1;
+#ajoutpack a {
+		color: #268aa1;
 		font-family: verdana;
 		font-size: 1em;
 		text-decoration: none;
+		margin-left:20px;
 }
 /* box mes actus */
 #actu{
