@@ -277,6 +277,7 @@ app.get('/admin', function(req, res){
 app.post('/addUser', function(req, res){
   Socles.findOne({id:req.param('idsocle')},function(err,socle){
 	if (err) console.log('login: ', err); 
+	if(socle){
     var user = new Users({ 
       nom    	  : req.param('nom'),
       prenom      : req.param('prenom'),
@@ -290,9 +291,19 @@ app.post('/addUser', function(req, res){
   });
   user.save(function (err) { if (err) console.log('mongo: ', err); });
   res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
-  });
   console.log('nouveau utilisateur');
-  res.redirect('/Mes_actualites');
+  res.render('addUser',{
+	layout: 'layoutFront',
+	title: 'addUser'
+  });
+	}else{
+  	  res.render('addUser',{
+		layout: 'layoutFront',
+		title: 'addUser'
+	  });
+	};
+  });
+
 });
 
 /********************
