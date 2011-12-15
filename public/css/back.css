@@ -422,6 +422,8 @@ h1 {
 	-moz-border-radius:15px;
 	-webkit-border-radius: 15px;
 	border-radius: 15px;
+	box-shadow: 0px -1px 1px #dedede;
+	-webkit-box-shadow: 0px -1px 1px #d0d0d0;
 }
 #mescubes .cubedetail{
 	position:absolute;
@@ -568,20 +570,22 @@ h1 {
 	display:block;
 	background-color: #268aa1;
 	height: 20px;
-	width: 150px;
+	width: 135px;
 	border: solid 3px #268aa1;
 	-moz-border-radius:75px;
 	-webkit-border-radius: 75px;
 	border-radius: 75px;	
 	background: url('../assets/img/croix.png') no-repeat 5px;
 	margin:30px auto;
+
 }
 #ajoutpack a {
-		color: #268aa1;
-		font-family: verdana;
-		font-size: 1em;
-		text-decoration: none;
-		margin-left:20px;
+	color: #268aa1;
+	font-family: verdana;
+	font-size: 1em;
+	text-decoration: none;
+	margin-left:20px;
+	line-height:18px;
 }
 /* box mes actus */
 #actu{

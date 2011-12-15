@@ -87,16 +87,15 @@ nodemailer.SMTP = {
   pass: 'equipe04'
 }
 
-/**
- *  Routes
- */
-
+/********************
+*   POST : INDEX    *
+********************/
 app.get('/', function(req, res){
   res.render('index', {
+	layout: 'layoutFront',
     title: "cubi'z"
   });
 });
-
 
 /********************
 *   POST : ADMIN    *
