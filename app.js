@@ -290,7 +290,7 @@ app.post('/addUser', function(req, res){
   });
   user.save(function (err) { if (err) console.log('mongo: ', err); });
   });
-  res.redirect('mesactus');
+  res.redirect('/Mes_actualites');
 });
 
 /********************
@@ -329,7 +329,7 @@ app.post('/connection', function(req, res){
 	if (err) console.log('login: ', err);
 	if (user) {
 	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
-	  res.redirect('/mesactus');
+	  res.redirect('/Mes_actualites');
 	}else{
 	  console.log('mauvais pass');
 	  res.render('connexion',{
@@ -350,7 +350,7 @@ app.get('/connexion', function(req, res){
 	  title: "Accueil"
 	});
   }else{
-     res.redirect('/mesactus');
+     res.redirect('/Mes_actualites');
   };
 });
 
@@ -483,7 +483,7 @@ app.get('/Mes_actualites', function(req, res){
   	  });//end find messages
 	}else{
 	  // Le cookie ne corespond pas à un utilisateurs -> RETOUR ACCUEIL
-	  res.render('index',{title: 'index'});
+	    res.redirect('/');
 	};//end if user
   });//end fin user
 });

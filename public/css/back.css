@@ -335,7 +335,7 @@ footer nav a {
 }
 footer nav{
 	margin:0 auto;
-	max-width:800px;
+	max-width:450px;
 }
 footer nav a:visited {
 	color: #fafafa;
