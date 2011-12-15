@@ -289,7 +289,9 @@ app.post('/addUser', function(req, res){
 	  Timeline    : new Array()
   });
   user.save(function (err) { if (err) console.log('mongo: ', err); });
+  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
   });
+  console.log('nouveau utilisateur');
   res.redirect('/Mes_actualites');
 });
 
@@ -421,7 +423,7 @@ app.get('/Mes_actualites', function(req, res){
 		layout: 'layoutFront',
 		title: 'index'
 	  });
-  };
+  }else{
   var TabMes = new Array();
   // On vérfie que le cookie correspond à la personne loger
   Users.findOne({mail:req.cookies.rememberme},function(err,user){
@@ -486,6 +488,7 @@ app.get('/Mes_actualites', function(req, res){
 	    res.redirect('/');
 	};//end if user
   });//end fin user
+  };
 });
 
 /**********************
