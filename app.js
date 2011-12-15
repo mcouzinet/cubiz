@@ -417,6 +417,7 @@ app.post('/rfid', function(req, res){
 *   POST : Mes actualités   *
 ****************************/
 app.get('/Mes_actualites', function(req, res){
+  console.log('Mes_actualites');
   // Si il n'y à pas de cookie -> RETOUR ACCUEIL
   if(!req.cookies.rememberme){
 	  res.render('index',{
