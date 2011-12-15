@@ -2,14 +2,14 @@
 	<h2>Mes cub'z</h2><span> - Cliquer l'encart pour modifier le message</span>
 <section class="colonnes">
 	<div class="pub">
-		<a href="http://www.vertbaudet.fr/" title='verbaudet'><img src="img/vertbaudet.jpg" alt="publicité nestlé"></a>
+		<a href="http://www.evian.fr/" title='verbaudet'><img src="img/evian.jpg" alt="publicité nestlé"></a>
 	</div>	
 </section>
 	<section class="clearfix">
-		<div class="colonnes">
+		<div class="colonnes" id="mescubes">
 			<% for(var i=0; i<cubes.length; i++) { %>
-				<div class="box">
-					<span class="cube <%- cubes[i].couleur %>"></span>
+				<div class="boitecube">
+					<span class="groscube <%- cubes[i].couleur %>"></span>
 					<p><%- cubes[i].contenu %></p>
 					<span class="twitter cercle-social-afficher"></span>
 					<span class="mail cercle-social-masquer"></span>

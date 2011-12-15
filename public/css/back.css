@@ -382,6 +382,10 @@ h1 {
 }
 
 /* box mes cubz */
+
+#mescubes{
+	width:60%;
+}
 .box {
 	width: 445px;
 	height: 63px;
@@ -643,12 +647,12 @@ section .bouton-actus{
 }
 .infos-gauche {
 	float: left;
-	width: 40%;
+	width: 50%;
 	color: #268194;
 }
 .infos-droite {
 	float: left;
-	width: 60%;
+	width: 50%;
 	color: #268194;
 }
 .box-infos ul li:first-child{
@@ -672,9 +676,33 @@ section .bouton-actus{
 }
 
 .box-infos input{
-	background-color:#fff;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	background-color:#e9f7fa;
+	width:80%;
 	height:30px;
-	font-size:20px;
+	font-size:13px;
+	-moz-border-radius:10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border-color:#d5eef3;
+	font-weight:bold;
+	color:#268194;
+}
+
+#mesinfos .valid{
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	background-color:#268194;
+	border-color:#268194;
+	float:right;
+	margin:10px 30px 0 0;
+	width:30%;
+	height:30px;
+	color:#fff;
+	font-size:15px;
+	letter-spacing:2px;
+	-moz-border-radius:10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 
 /* =============================================================================
