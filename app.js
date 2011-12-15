@@ -290,9 +290,7 @@ app.post('/addUser', function(req, res){
   });
   user.save(function (err) { if (err) console.log('mongo: ', err); });
   });
-  res.render('addUser',{
-	title: 'addUser'
-  });
+  res.redirect('mesactus');
 });
 
 /********************
@@ -300,26 +298,9 @@ app.post('/addUser', function(req, res){
 ********************/
 app.get('/addUser', function(req, res){
   res.render('addUser',{
+	layout: 'layoutFront',
 	title: 'addUser'
   });
-});
-
-/*******************
-*   POST : Login   *
-*******************/
-app.post('/connection', function(req, res){
-  Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
-	if (err) console.log('login: ', err);
-	if (user) {
-	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
-	  res.render('login',{title: 'login'});
-	  console.log('user: ', user.idsocle);
-	}else{
-	  console.log('mauvais pass');
-	  res.render('login',{title: 'login'});
-	}
-  });
-
 });
 
 /*************************
@@ -337,6 +318,37 @@ app.get('/deconnexion', function(req, res){
       layout: 'layoutFront',
       title: "Accueil"
     });
+  };
+});
+
+/*******************
+*   POST : Login   *
+*******************/
+app.post('/connection', function(req, res){
+  Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
+	if (err) console.log('login: ', err);
+	if (user) {
+	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
+	  res.render('login',{title: 'login'});
+	  console.log('user: ', user.idsocle);
+	}else{
+	  console.log('mauvais pass');
+	  res.render('login',{title: 'login'});
+	}
+  });
+});
+
+/***********************
+*   GET : Connexion    *
+***********************/
+app.get('/connexion', function(req, res){
+  if(!req.cookies.rememberme){
+	res.render('connexion',{
+	  layout: 'layoutFront',
+	  title: "Accueil"
+	});
+  }else{
+     res.redirect('mesactus');
   };
 });
 
@@ -396,13 +408,6 @@ app.post('/rfid', function(req, res){
 	title: 'index'
   });
 });
-
-app.get('/login', function(req, res){
-  res.render('login',{
-	title: 'login'
-  });
-});
-
 
 /****************************
 *   POST : Mes actualités   *
