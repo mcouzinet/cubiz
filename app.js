@@ -329,11 +329,13 @@ app.post('/connection', function(req, res){
 	if (err) console.log('login: ', err);
 	if (user) {
 	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
-	  res.render('login',{title: 'login'});
-	  console.log('user: ', user.idsocle);
+	  res.redirect('mesactus');
 	}else{
 	  console.log('mauvais pass');
-	  res.render('login',{title: 'login'});
+	  res.render('connexion',{
+	    layout: 'layoutFront',
+	    title: "Accueil"
+	  });
 	}
   });
 });
