@@ -292,10 +292,7 @@ app.post('/addUser', function(req, res){
   user.save(function (err) { if (err) console.log('mongo: ', err); });
   res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
   console.log('nouveau utilisateur');
-  res.render('addUser',{
-	layout: 'layoutFront',
-	title: 'addUser'
-  });
+  res.redirect('/');
 	}else{
   	  res.render('addUser',{
 		layout: 'layoutFront',
