@@ -321,15 +321,15 @@ app.get('/deconnexion', function(req, res){
   };
 });
 
-/*******************
-*   POST : Login   *
-*******************/
+/************************
+*   POST : Connection   *
+************************/
 app.post('/connection', function(req, res){
   Users.findOne({mdp:req.param('mdp'),mail:req.param('mail')},function(err,user){
 	if (err) console.log('login: ', err);
 	if (user) {
 	  res.cookie('rememberme', req.param('mail'), { expires: new Date(Date.now() + 9000000), httpOnly: true });
-	  res.redirect('mesactus');
+	  res.redirect('/mesactus');
 	}else{
 	  console.log('mauvais pass');
 	  res.render('connexion',{
@@ -350,7 +350,7 @@ app.get('/connexion', function(req, res){
 	  title: "Accueil"
 	});
   }else{
-     res.redirect('mesactus');
+     res.redirect('/mesactus');
   };
 });
 
