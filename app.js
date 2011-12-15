@@ -87,9 +87,9 @@ nodemailer.SMTP = {
   pass: 'equipe04'
 }
 
-/********************
-*   POST : INDEX    *
-********************/
+/*******************
+*   GET : INDEX    *
+*******************/
 app.get('/', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('index',{
@@ -104,65 +104,107 @@ app.get('/', function(req, res){
   };
 });
 
-/*****************************
-*   POST : FONCTIONNEMENT    *
-*****************************/
+/****************************
+*   GET : FONCTIONNEMENT    *
+****************************/
 app.get('/fonctionnement', function(req, res){
-  res.render('fonctionnement', {
-	layout: 'layoutFront',
-    title: "cubi'z"
-  });
-});
-
-/***********************
-*   POST : PRODUITS    *
-***********************/
-app.get('/produits', function(req, res){
-  res.render('produits', {
-	layout: 'layoutFront',
-    title: "cubi'z"
-  });
+  if(!req.cookies.rememberme){
+	res.render('fonctionnement',{
+	  layout: 'layoutFront',
+	  title: "fonctionnement"
+	});
+  }else{
+    res.render('fonctionnement', {
+      layout: 'layoutFront_co',
+      title: "fonctionnement"
+    });
+  };
 });
 
 /**********************
-*   POST : CONTACT    *
+*   GET : PRODUITS    *
 **********************/
+app.get('/produits', function(req, res){
+  if(!req.cookies.rememberme){
+	res.render('produits',{
+	  layout: 'layoutFront',
+	  title: "produits"
+	});
+  }else{
+    res.render('produits', {
+      layout: 'layoutFront_co',
+      title: "produits"
+    });
+  };
+});
+
+/********************
+*   GET : CONTACT   *
+********************/
 app.get('/contact', function(req, res){
-  res.render('contact', {
-	layout: 'layoutFront',
-    title: "cubi'z"
-  });
+  if(!req.cookies.rememberme){
+	res.render('contact',{
+	  layout: 'layoutFront',
+	  title: "contact"
+	});
+  }else{
+    res.render('contact', {
+      layout: 'layoutFront_co',
+      title: "contact"
+    });
+  };
 });
 
-/******************
-*   POST : FAQ    *
-******************/
+/*****************
+*   GET : FAQ    *
+*****************/
 app.get('/faq', function(req, res){
-  res.render('faq', {
-	layout: 'layoutFront',
-    title: "cubi'z"
-  });
+  if(!req.cookies.rememberme){
+	res.render('faq',{
+	  layout: 'layoutFront',
+	  title: "faq"
+	});
+  }else{
+    res.render('faq', {
+      layout: 'layoutFront_co',
+      title: "faq"
+    });
+  };
 });
 
-/***********************
-*   POST : MENTIONS    *
-***********************/
+/**********************
+*   GET : MENTIONS    *
+**********************/
 app.get('/mentions', function(req, res){
-  res.render('mentions', {
-	layout: 'layoutFront',
-    title: "cubi'z"
-  });
+  if(!req.cookies.rememberme){
+	res.render('mentions',{
+	  layout: 'layoutFront',
+	  title: "mentions"
+	});
+  }else{
+    res.render('mentions', {
+      layout: 'layoutFront_co',
+      title: "mentions"
+    });
+  };
 });
 
 
-/***********************
-*   POST : MENTIONS    *
-***********************/
+/**********************
+*   GET : MENTIONS    *
+**********************/
 app.get('/plandusite', function(req, res){
-  res.render('plandusite', {
-	layout: 'layoutFront',
-    title: "cubi'z"
-  });
+  if(!req.cookies.rememberme){
+	res.render('plandusite',{
+	  layout: 'layoutFront',
+	  title: "plandusite"
+	});
+  }else{
+    res.render('plandusite', {
+      layout: 'layoutFront_co',
+      title: "plandusite"
+    });
+  };
 });
 
 /********************
@@ -280,6 +322,23 @@ app.post('/connection', function(req, res){
 
 });
 
+/*************************
+*   GET : Deconnexion    *
+*************************/
+app.get('/deconnexion', function(req, res){
+  if(!req.cookies.rememberme){
+	res.render('index',{
+	  layout: 'layoutFront',
+	  title: "Accueil"
+	});
+  }else{
+	res.clearCookie('rememberme');
+    res.render('index', {
+      layout: 'layoutFront',
+      title: "Accueil"
+    });
+  };
+});
 
 /******************
 *   POST : RFID   *
