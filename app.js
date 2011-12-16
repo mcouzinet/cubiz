@@ -126,9 +126,7 @@ socket.on('save_user', function (data) {
 		if (user) {	 
 			user.nom = data.nom;
 		    user.prenom = data.prenom;
-		    user.mail = data.mail;
 		    user.tel = data.sms;
-			user.mdp = data.mdp;
 			user.twitter = data.twitter;
 			user.save(function (err) {if (err) console.log('mongo: ', err); });
 		};
@@ -477,7 +475,7 @@ app.post('/rfid', function(req, res){
 		mail_data = {
 			sender: 'mcouzinet@gmail.com',
 		    to:'sms@smsbox.fr',
-		    subject:'login=mcouzinet&pass=iec560&dest='+user.tel+'&origine=Cubiz&mode=Expert&notif=0',
+		    subject:'login=mcouzinet&pass=iec560&dest=0'+user.tel+'&origine=Cubiz&mode=Expert&notif=0',
 			body:cube.contenu
 		}
 		nodemailer.send_mail(mail_data, function(error, success){
