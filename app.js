@@ -439,9 +439,11 @@ app.post('/rfid', function(req, res){
 	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  	};
 	  console.log(cube);
-	  io.sockets.sockets[sid].emit('message', { 
-		cube: cube 
-	  });
+	  if(io.sockets.sockets[sid]){
+	    io.sockets.sockets[sid].emit('message', { 
+	      cube: cube 
+	    });
+  	  };
 	  if(cube.twitter){
 		/*
 		  CODE POUR TWITTER :(
