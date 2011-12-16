@@ -134,6 +134,11 @@ socket.on('save_user', function (data) {
 	  });
   });
 	// End of socket
+function emit(){
+  	socket.emit('message', { 
+		cube: cube 
+	  });
+}
 });
 
 /*******************
@@ -439,11 +444,7 @@ app.post('/rfid', function(req, res){
 	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  	};
 	  console.log(cube);
-	  io.sockets.on('connection', function (socket) {
-	  	socket.emit('message', { 
-			cube: cube 
-		  });
-	  });
+	  emit();
 	  if(cube.twitter){
 		/*
 		  CODE POUR TWITTER :(
