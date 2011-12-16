@@ -431,14 +431,20 @@ app.get('/rfid', function(req, res){
 			sender: 'mcouzinet@gmail.com',
 		    to:user.mail,
 		    subject:'Cubiz : Un nouveau message de votre enfant !',
-			html: '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'+
-			'<head><meta charset="utf-8"></head>'+
-			'<body style="width:680px;margin:auto;">'+
-			'<table cellpadding="0" cellspacing="0"><tr><td height="35px"><img src="http://florian.jude.free.fr/hetic/img/header.jpg" style="display:block"></td></tr>'+
-			'<tr><td width="680px" height="58px" style="padding-top: 35px; #f3e3e6 no-repeat;"><img style="position: absolute; top: -25px; padding-left: 40px;" src="http://florian.jude.free.fr/hetic/img/logo.png" alt="logo cubiz" title="logo cubiz"><span style="color: #fa6176; padding-left: 230px; font-family: KewlScript; font-size: 30px;">Nouveau message !</span></td></tr><tr>'+
-			'<td width="680px" height="120px" style="background: #f3e3e6;"><p style="font-family: Verdana; font-size: 14px; margin: 0; padding: 0 0 20px 70px;">'+cube.contenu+'</p></td></tr>'+
-			'<tr><td align="center" width="680px" height="45px" style="background: url("http://florian.jude.free.fr/hetic/img/footer.jpg") #f3e3e6 no-repeat; background-position: bottom; ">'+
-			'<span style="font-family: Conga; font-size: 18px; margin: 0; padding-top: -20px; color: #ff5f6e;">Retrouvez tous les messages de Hugo dans votre espace maman sur <a style="color: #f09e9e;" href="http://www.cubiz.fr:3000">www.cubiz.fr</a></span></td></tr></table></body></html>',
+			html:
+			'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><head><meta charset="utf-8"></head>'+
+			'<body><table cellpadding="0" cellspacing="0"><tr><td><img src="http://florian.jude.free.fr/hetic/1.jpg" height="38px" width="57px" style="display:block; "/></td>'+
+			'<td><img height="38px" width="490px" src="http://florian.jude.free.fr/hetic/2.jpg" style="display:block;"/></td><td>'+
+			'<img height="38px" width="59px" src="http://florian.jude.free.fr/hetic/3.jpg" style="display:block;"/></td></tr><tr>'+
+			'<td><img src="http://florian.jude.free.fr/hetic/4.jpg" height="160px" width="57px" style="display:block;"/></td>'+
+			'<td valign="middle" height="160px" width="490px" style="background-color: #f3e3e6;"><table cellpadding="0" cellspacing="0"><tr><td>'+
+			'<img src="http://florian.jude.free.fr/hetic/logo.png" alt="logo cubiz" title="logo cubiz" /></td><td>'+
+			'<h1 style="font-family: Verdana; font-size: 24px; color: #fa6176; margin-left: 20px;">Nouveau message</h1>'+
+			'<span style="font-family: Verdana; font-size: 14px; margin-left: 20px;">'+cube.contenu+'</span>'+
+			'</td></tr></table></td><td><img src="http://florian.jude.free.fr/hetic/5.jpg" height="160px" width="59px" style="display:block;"/></td>'+
+			'</tr><tr><td><img src="http://florian.jude.free.fr/hetic/6.jpg" height="57px" width="57px" style="display:block"/></td>'+
+			'<td><img src="http://florian.jude.free.fr/hetic/7.jpg" height="57px" width="490px" style="display:block"/></td>'+
+			'<td><img src="http://florian.jude.free.fr/hetic/8.jpg" height="57px" width="59px" style="display:block"/></td></tr></table></body></html>'
 		}
 		nodemailer.send_mail(mail_data, function(error, success){
 	        console.log('Email ' + success ? 'sent' : 'failed');

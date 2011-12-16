@@ -249,6 +249,7 @@ header .wrapper img {
 	float: left;
 	position:relative;
 	z-index:20;
+	margin-top: -30px;
 }
 header span{
 	float: left;
@@ -275,6 +276,7 @@ header nav{
 	margin: 0px auto;
 	padding-top:60px;
 }
+
 header nav ul{
 	float:right;
 }
