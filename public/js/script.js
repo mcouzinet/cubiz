@@ -81,4 +81,24 @@ $(function charge(){
 			$this.hasClass('cercle-social-afficher')?$this.removeClass('cercle-social-afficher').addClass('cercle-social-masquer'):$this.addClass('cercle-social-afficher').removeClass('cercle-social-masquer');
 		}
 	});
+	
+	/* MODIFICATION D'UN USER */
+	$('.validinfo').click(function(){
+		$this = $(this);
+		boite = $this.parent().parent();
+		boite.find('.bts').hide();
+		mes = boite.find('p').contents();
+		content = boite.find('textarea').attr('value');
+		boite.find('p').contents().replaceWith(content);
+		boite.css({'z-index':'5'});
+		overlay.hide();
+		socket.emit('save_cube', {
+			user:boite.find('.bts').attr('id'),
+			idcube:boite.find('.boitecube').attr('id'),
+			contenu:content,
+			twitter:twitter,
+			sms:sms,
+			mail:mail
+		});
+	});
 });

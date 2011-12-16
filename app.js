@@ -117,6 +117,32 @@ io.sockets.on('connection', function (socket) {
 		};
 	});
   });
+socket.on('save_user', function (data) {
+	Cubes.findOne({_id:data.idcube},function(err,cube){
+      if(cube){
+        cube.contenu = data.contenu;
+        cube.twitter = data.twitter;
+        cube.email = data.mail;
+        cube.sms = data.sms;
+        cube.save(function (err) {if (err) console.log('mongo: ', err); });
+	  };
+	});
+	Users.findOne({_id:data.user},function(err,user){
+		if (err) console.log('login: ', err);
+		if (user) {	 
+   			for(var i=0;i<user.cubes.length;i++){
+				console.log(user.cubes[i]._id);
+			  if(user.cubes[i]._id == data.idcube){
+				user.cubes[i].contenu = data.contenu;
+		        user.cubes[i].twitter = data.twitter;
+		        user.cubes[i].email = data.mail;
+		        user.cubes[i].sms = data.sms;
+				user.save(function (err) {if (err) console.log('mongo: ', err); });
+			  };
+			};
+		};
+	});
+  });
 });
 
 /*******************
