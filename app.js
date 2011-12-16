@@ -416,7 +416,7 @@ app.get('/connexion', function(req, res){
 /******************
 *   POST : RFID   *
 ******************/
-app.get('/rfid', function(req, res){
+app.post('/rfid', function(req, res){
   rfid = req.param('rfid');
   console.log(rfid);
   Cubes.findOne({rfid:rfid},function(err,cube){
@@ -437,9 +437,11 @@ app.get('/rfid', function(req, res){
 	  	  message.save(function (err) { if (err) console.log('mongo: ', err); });
 	  	  user.Timeline.push(message);
 	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
-	  	}
-	  socket.emit('message', { 
-		cube: cube 
+	  	};
+	  io.sockets.on('connection', function (socket) {
+	  	socket.emit('message', { 
+			cube: cube 
+		  });
 	  });
 	  if(cube.twitter){
 		/*
