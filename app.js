@@ -56,7 +56,7 @@ mongoose.connect('mongodb://92.243.19.190/baby');
 /**
  *  Modules
  */
-
+var sid;
 var express = require('express'),
     _ = require('underscore'),
 	nodemailer = require('nodemailer'),
@@ -91,6 +91,7 @@ nodemailer.SMTP = {
 *   SOCKET.IO   *
 ****************/
 io.sockets.on('connection', function (socket) {
+  sid = socket.id;
   socket.on('save_cube', function (data) {
 	Cubes.findOne({_id:data.idcube},function(err,cube){
       if(cube){
@@ -134,11 +135,7 @@ socket.on('save_user', function (data) {
 	  });
   });
 	// End of socket
-function emit(){
-  	socket.emit('message', { 
-		cube: cube 
-	  });
-}
+
 });
 
 /*******************
@@ -444,7 +441,9 @@ app.post('/rfid', function(req, res){
 	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  	};
 	  console.log(cube);
-	  emit();
+	  io.sockets.sockets[sid].emit('message', { 
+		cube: cube 
+	  });
 	  if(cube.twitter){
 		/*
 		  CODE POUR TWITTER :(
