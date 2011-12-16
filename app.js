@@ -118,6 +118,8 @@ io.sockets.on('connection', function (socket) {
 	});
   });
 socket.on('save_user', function (data) {
+	console.log(data);
+	/*
 	Cubes.findOne({_id:data.idcube},function(err,cube){
       if(cube){
         cube.contenu = data.contenu;
@@ -141,7 +143,7 @@ socket.on('save_user', function (data) {
 			  };
 			};
 		};
-	});
+	});*/
   });
 });
 
