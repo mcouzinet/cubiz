@@ -3,101 +3,82 @@
 	twitter: @mcouzinet
 */
 $(function charge(){
+	/*************
+	* Socket.IO  *
+	*************/
+	var content,a=true,media=false;
+	var socket = io.connect('http://localhost:3000');
 	
-/********************************
-* Récupération taille document  *
-********************************/	
-	var height = $(window).height();
-	var width = $(window).width();
-	$(window).resize(function(){
-		height = $(this).height();
-		width = $(this).width();
-	});
+	/* MODIFICATION D'UN CUBZ */
+	overlay = $('.overlay');
 	
-/******************
-* Menu déroulant  *
-******************/
-	InfoCompte = $('#InfoCompte');
-	InfoCompte.click(function () {
-		InfoCompte.find("a:first").addClass('hover');
-	    InfoCompte.find("div:first").slideToggle(100);
-	});
-	InfoCompte.mouseleave(function () {
-		InfoCompte.find("a:first").removeClass('hover');
-	    InfoCompte.find("div:first").slideUp(100);
-	});
-	InfoCompte.mouseenter(function () {
-		InfoCompte.find("a:first").addClass('hover');
-	    InfoCompte.find("div:first").slideDown(100);
+	$('.boitecube').click(function (){
+		if(a){
+			console.log('clickboite');
+			$this = $(this);
+			a = false;
+			media = true;
+			$this.parent().css({'z-index':'51'});
+			$this.parent().find('.bts').show();
+			mes = $this.find('p').contents();
+		    content = mes[0].data;
+			mes.replaceWith('<textarea name="demande" rows="4" cols="40" value="">'+content+'</textarea>');
+			overlay.show();
+		}
 	});
 	
-	btPartager = $('#btPartager');
-	InfoCompte.click(function () {
-		InfoCompte.find("a:first").addClass('hover');
-	    InfoCompte.find("div:first").slideToggle(100);
+	$('.Bt_retour').click(function(){
+		a=true;
+		media = false;
+		$this = $(this);
+		boite = $(this).parent().parent();
+		boite.find('.bts').hide();
+		mes = boite.find('p').contents();
+		mes.replaceWith(content);
+		boite.css({'z-index':'5'});
+		overlay.hide();
 	});
-	InfoCompte.mouseleave(function () {
-		InfoCompte.find("a:first").removeClass('hover');
-	    InfoCompte.find("div:first").slideUp(100);
-	});
-	InfoCompte.mouseenter(function () {
-		InfoCompte.find("a:first").addClass('hover');
-	    InfoCompte.find("div:first").slideDown(100);
-	});
-
-/**********************************
-* Déroulement changement de page  *
-**********************************/	
-	btPopulaire = $('#btPopulaire');
-	btPopulaire.click(function(){
-		$('#main').slideUp(500,function(){
-			$('#main').load('/Populaire #main > *').slideDown(500);
+	
+	$('.Bt_valid').click(function(){
+		a=true;
+		media = false;
+		$this = $(this);
+		boite = $this.parent().parent();
+		boite.find('.bts').hide();
+		mes = boite.find('p').contents();
+		content = boite.find('textarea').attr('value');
+		boite.find('p').contents().replaceWith(content);
+		boite.css({'z-index':'5'});
+		overlay.hide();
+		twitter = boite.find(".twitter").hasClass('cercle-social-afficher')?true:false;
+		sms = boite.find(".sms").hasClass('cercle-social-afficher')?true:false;
+		mail = boite.find(".mail").hasClass('cercle-social-afficher')?true:false;
+		socket.emit('save_cube', {
+			user:boite.find('.bts').attr('id'),
+			idcube:boite.find('.boitecube').attr('id'),
+			contenu:content,
+			twitter:twitter,
+			sms:sms,
+			mail:mail
 		});
-		return false;
 	});
-	btNouveau = $('#btNouveau');
-	btNouveau.click(function(){
-		$('#main').slideUp(500,function(){
-			$('#main').load('/Nouveau #main > *').slideDown(500);
-		});
-		return false;
-	});
-	addLink = $('#addLink');
-	addLink.click(function(){
-	 	$('.lightbox').load('/addLink #main > *').slideToggle(500);
-		return false;
-	});
-	title = $('.title');
-	title.click(function(){
-	 	$('iframe').slideUp(500,function(){
-			$('#nouveau').slideDown(500).load('/Populaire #nouveau',function(){
-			charge();	
-			});
-		});
-		return false;
-	});
-/*****************************************************
-* Adapter la taille de l'iframe à celle du document  *
-*****************************************************/	
-	$('iframe').css({height:height});
-	$('#index').css({height:(height+40)});
 	
-/*************
-* Socket.IO  *
-*************/	
-	 var socket = io.connect('http://localhost:3000');
-	 socket.on('addLink', function (data) {
-		console.log('DATA = ' +data);
-		$('#main').slideDown(500).prepend('<div class="link">'+
-			'<div class="score deux '+ data.catégorie +'">'+
-				'<div class="titre"><a href="/Act/'+ data.title +'">'+ data.title +'</a></div>'+
-				'<div class="footer-link">'+
-					'<div class="postor">Par <a href="#">'+ data.author +'</a></div>'+
-					'<div class="nbcom"><a href="#" title="commentaires du lien">'+ data.comments.length +' commentaires</a></div>'+
-					'<span class="source">'+ data.source +'</span>'+
-				'</div>'+
-				'<span class="cat">'+ data.catégorie +'</span>'+
-				'<span class="poid">'+ data.like +'</span></div></div>');
-		
+	$('.twitter').click(function(){
+		if(media){
+			$this = $(this);
+			$this.hasClass('cercle-social-afficher')?$this.removeClass('cercle-social-afficher').addClass('cercle-social-masquer'):$this.addClass('cercle-social-afficher').removeClass('cercle-social-masquer');
+		}
+	});
+	$('.sms').click(function(){
+		if(media){
+			$this = $(this);
+			$this.hasClass('cercle-social-afficher')?$this.removeClass('cercle-social-afficher').addClass('cercle-social-masquer'):$this.addClass('cercle-social-afficher').removeClass('cercle-social-masquer');
+		}
+	});
+	$('.mail').click(function(){
+		if(media){
+			$this = $(this);
+			$this.hasClass('cercle-social-afficher')?$this.removeClass('cercle-social-afficher').addClass('cercle-social-masquer'):$this.addClass('cercle-social-afficher').removeClass('cercle-social-masquer');
+		}
 	});
 });

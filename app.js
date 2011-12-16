@@ -87,6 +87,38 @@ nodemailer.SMTP = {
   pass: 'equipe04'
 }
 
+/****************
+*   SOCKET.IO   *
+****************/
+io.sockets.on('connection', function (socket) {
+  socket.on('save_cube', function (data) {
+	Cubes.findOne({_id:data.idcube},function(err,cube){
+      if(cube){
+        cube.contenu = data.contenu;
+        cube.twitter = data.twitter;
+        cube.email = data.mail;
+        cube.sms = data.sms;
+        cube.save(function (err) {if (err) console.log('mongo: ', err); });
+	  };
+	});
+	Users.findOne({_id:data.user},function(err,user){
+		if (err) console.log('login: ', err);
+		if (user) {	 
+   			for(var i=0;i<user.cubes.length;i++){
+				console.log(user.cubes[i]._id);
+			  if(user.cubes[i]._id == data.idcube){
+				user.cubes[i].contenu = data.contenu;
+		        user.cubes[i].twitter = data.twitter;
+		        user.cubes[i].email = data.mail;
+		        user.cubes[i].sms = data.sms;
+				user.save(function (err) {if (err) console.log('mongo: ', err); });
+			  };
+			};
+		};
+	});
+  });
+});
+
 /*******************
 *   GET : INDEX    *
 *******************/
@@ -367,7 +399,7 @@ app.get('/connexion', function(req, res){
 /******************
 *   POST : RFID   *
 ******************/
-app.post('/rfid', function(req, res){
+app.get('/rfid', function(req, res){
   rfid = req.param('rfid');
   console.log(rfid);
   Cubes.findOne({rfid:rfid},function(err,cube){
@@ -399,7 +431,14 @@ app.post('/rfid', function(req, res){
 			sender: 'mcouzinet@gmail.com',
 		    to:user.mail,
 		    subject:'Cubiz : Un nouveau message de votre enfant !',
-			body:cube.contenu
+			html: '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'+
+			'<head><meta charset="utf-8"></head>'+
+			'<body style="width:680px;margin:auto;">'+
+			'<table cellpadding="0" cellspacing="0"><tr><td height="35px"><img src="http://florian.jude.free.fr/hetic/img/header.jpg" style="display:block"></td></tr>'+
+			'<tr><td width="680px" height="58px" style="padding-top: 35px; #f3e3e6 no-repeat;"><img style="position: absolute; top: -25px; padding-left: 40px;" src="http://florian.jude.free.fr/hetic/img/logo.png" alt="logo cubiz" title="logo cubiz"><span style="color: #fa6176; padding-left: 230px; font-family: KewlScript; font-size: 30px;">Nouveau message !</span></td></tr><tr>'+
+			'<td width="680px" height="120px" style="background: #f3e3e6;"><p style="font-family: Verdana; font-size: 14px; margin: 0; padding: 0 0 20px 70px;">'+cube.contenu+'</p></td></tr>'+
+			'<tr><td align="center" width="680px" height="45px" style="background: url("http://florian.jude.free.fr/hetic/img/footer.jpg") #f3e3e6 no-repeat; background-position: bottom; ">'+
+			'<span style="font-family: Conga; font-size: 18px; margin: 0; padding-top: -20px; color: #ff5f6e;">Retrouvez tous les messages de Hugo dans votre espace maman sur <a style="color: #f09e9e;" href="http://www.cubiz.fr:3000">www.cubiz.fr</a></span></td></tr></table></body></html>',
 		}
 		nodemailer.send_mail(mail_data, function(error, success){
 	        console.log('Email ' + success ? 'sent' : 'failed');
@@ -427,7 +466,7 @@ app.post('/rfid', function(req, res){
 *   POST : Mes actualités   *
 ****************************/
 app.get('/Mes_actualites', function(req, res){
-  console.log('Mes_actualites');
+  console.log('Mes_actualittes');
   // Si il n'y à pas de cookie -> RETOUR ACCUEIL
   if(!req.cookies.rememberme){
 	  res.render('index',{
@@ -520,10 +559,23 @@ app.get('/Mes_cubz', function(req, res){
 	if (user) {
 	  // On rafraichit le cookies
 	  res.cookie('rememberme', user.mail, { expires: new Date(Date.now() + 9000000), httpOnly: true });
+	  var tabCubes = new Array();
+	  for(var i=0;i<user.cubes.length;i++){
+		cube = new Object();
+		cube.contenu =  user.cubes[i].contenu;
+		cube.mail = user.cubes[i].email?'cercle-social-afficher':'cercle-social-masquer';
+		cube.sms = user.cubes[i].sms?'cercle-social-afficher':'cercle-social-masquer';
+		cube.twitter = user.cubes[i].twitter?'cercle-social-afficher':'cercle-social-masquer';
+		cube.couleur = user.cubes[i].couleur;
+		cube.rfid = user.cubes[i].rfid;
+		cube._id = user.cubes[i]._id;
+		cube.user = user._id;
+		tabCubes.push(cube);
+	  }
 	  //On affiche la page
 	  res.render('mescubz',{
 		title: "Mes cub'Z",
-		cubes: user.cubes
+		cubes: tabCubes
   	  });
 	};
   });

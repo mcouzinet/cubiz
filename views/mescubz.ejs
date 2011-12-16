@@ -1,3 +1,4 @@
+<div class="overlay"></div>
 <div id="content" class="wrapper">
 	<h2>Mes cub'z</h2><span> - Cliquer l'encart pour modifier le message</span>
 <section class="colonnes">
@@ -8,6 +9,7 @@
 	<section class="clearfix">
 		<div class="colonnes" id="mescubes">
 			<% for(var i=0; i<cubes.length; i++) { %>
+				<div class="posbouton">
 				<div class="boitecube" id="<%- cubes[i]._id %>">
 					<span class="groscube <%- cubes[i].couleur %>"></span>
 					<div class="cubedetail">
@@ -15,11 +17,15 @@
 						
 					</div>
 					<div id="supportcube">
-					<span class="twitter cercle-social-afficher"></span>
-					<span class="mail cercle-social-masquer"></span>
-					<span class="sms cercle-social-masquer"></span>
+					<span class="twitter <%- cubes[i].twitter %>"></span>
+					<span class="mail <%- cubes[i].mail %>"></span>
+					<span class="sms <%- cubes[i].sms %>"></span>
 					</div>
 					<div class="ecrit"></div>
+				</div>
+				<div class="bts" id="<%- cubes[i].user %>">
+					<span class="Bt_retour">Retour</span><span class="Bt_valid">Valider</span>
+				</div>
 				</div>
 			<% } %>
 			<span id="ajoutpack"><a href="#" title="Ajouter un pack">Ajouter un pack</a></span>	

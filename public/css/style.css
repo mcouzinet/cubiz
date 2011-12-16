@@ -831,6 +831,10 @@ div.icone1
 .box-infos hr{
 	border-color: #268194;
 }
+
+.bts{
+	display:none;
+}
 .box-infos > span, .box-infos ul li {
 	color: #fb516a;
 	padding-bottom: 15px;

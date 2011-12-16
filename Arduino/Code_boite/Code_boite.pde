@@ -40,7 +40,7 @@ void loop() {
     goPrint = false;
   }
   Serial.flush();
-  delay(1000);
+  delay(3000);
 }
 
 // vérifie que le tag est valide

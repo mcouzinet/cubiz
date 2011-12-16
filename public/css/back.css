@@ -382,6 +382,16 @@ h1 {
 }
 
 /* box mes cubz */
+.overlay {
+background: transparent url('../assets/img/overlay.png') repeat top left;
+position: fixed;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+z-index: 50;
+display: none;
+}
 
 #mescubes{
 	width:60%;
@@ -413,10 +423,10 @@ h1 {
 }
 #mescubes .boitecube p{
 	color:#268b9f;
-	padding:20px 120px 0 20px;
+	padding:20px 30% 0 20px;
 	font-family:Helvetica, Helvetica Neue, Arial, sans-serif;
 	font-size:15px;
-	width:70%;
+	width:60%;
 	height:50px;
 	background-color: #d6f2f2;
 	-moz-border-radius:15px;
@@ -455,10 +465,40 @@ h1 {
 	background-position:0px -285px;
 }
 
-#mescubes 
+#mescubes textarea{
+	height:40px;
+	width:100%;
+	margin-top:-8px;
+	background-color: #eafafa;
+	color:#268b9f;
+}
 
 #mescubes .boitecube{
 	width:90%;
+}
+.Bt_retour{
+	position:absolute;
+	bottom:-21px;
+	right:50px;
+	background-color: #F87171;
+	display:inline-block;
+	padding:5px 20px;
+	-moz-border-radius:0px 0px 15px 15px;
+	-webkit-border-radius:0px 0px 15px 15px;
+	border-radius: 0px 0px 15px 15px;
+	color:#fff;
+}
+.Bt_valid{
+	position:absolute;
+	bottom:-21px;
+	right:130px;
+	background-color: #08b1b1;
+	display:inline-block;
+	padding:5px 20px;
+	-moz-border-radius:0px 0px 15px 15px;
+	-webkit-border-radius:0px 0px 15px 15px;
+	border-radius: 0px 0px 15px 15px;
+	color:#fff;
 }
 .box {
 	width: 445px;
@@ -470,6 +510,12 @@ h1 {
 	padding-top: 10px;
 	margin-top: 5px;
 	display: block;
+}
+.bts{
+	display:none;
+}
+.posbouton{
+	position:relative;
 }
 .cube {
 	content:"";
@@ -839,9 +885,7 @@ section .pub img{
 	width: 100%;
 	margin:7px 0 4px 0;
 }
-	
-	
-	
+		
 }
 
 
