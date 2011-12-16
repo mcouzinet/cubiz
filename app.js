@@ -438,6 +438,7 @@ app.post('/rfid', function(req, res){
 	  	  user.Timeline.push(message);
 	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  	};
+	  console.log(cube);
 	  io.sockets.on('connection', function (socket) {
 	  	socket.emit('message', { 
 			cube: cube 
