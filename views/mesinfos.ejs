@@ -6,7 +6,7 @@
 		</div>	
 	</section>
 	<section class="colonnes">
-		<form action="/mesinfos" method="post" autocomplete="on" id="mesinfos">
+		<form action="/Mes_infos" method="get" autocomplete="on" id="mesinfos">
 
 		<div class="box-infos clearfix">
 			<div class="infos-gauche">
@@ -20,25 +20,25 @@
 				<span>Confirmation</span>
 			</div>
 			<div class="infos-droite">
-				<span><input type="text" name="prenom" value="<%- user.prenom %>" class="champ"></span></br>
-				<span><input type="text" name="nom" value="<%- user.nom %>" class="champ"></span></br>
+				<span><input type="text" name="prenom" value="<%- user.prenom %>" class="champ prenom"></span></br>
+				<span><input type="text" name="nom" value="<%- user.nom %>" class="champ nom"></span></br>
 				<hr>
 				<span><input type="mail" name="prenom" value="<%- user.mail %>" class="champ"></span></br>
 				<hr>
 				<span><input type="password" name="prenom" value="" class="champ"></span></br>
-				<span><input type="password" name="prenom" value="" class="champ"></span></br>
+				<span><input type="password" name="prenom" value="" class="champ mdp"></span></br>
 				<span><input type="password" name="prenom" value="" class="champ"></span>
 			</div>	
 		</div>
 		<div class="box-infos clearfix">
 			<span>Adresses cubi'Z</span>
 			<ul>
-				<li><span><input type="mail" name="prenom" value="<%- user.twitter %>" class="champ"></span></li>
-				<li><span><input type="mail" name="prenom" value="<%- user.mail %>" class="champ"></span></li>
-				<li><span><input type="mail" name="prenom" value="<%- user.tel %>" class="champ"></span></li>
+				<li><span><input type="text" name="twitter" value="<%- user.twitter %>" class="champ twit"></span></li>
+				<li><span><input type="text" name="mail" value="<%- user.mail %>" class="champ email"></span></li>
+				<li><span><input type="text" name="sms" value="<%- user.tel %>" class="champ tel"></span></li>
 			</ul>							
 		</div>
-		<input type="submit" value="Enregister" class="valid validinfo" id="<%- user._id %>"/>
+		<a href="/Mes_infos" class="valid validinfo" id="<%- user._id %>"/>Enregister</a>
 		</form>
 	</section>
 </div>

@@ -117,34 +117,23 @@ io.sockets.on('connection', function (socket) {
 		};
 	});
   });
+
 socket.on('save_user', function (data) {
 	console.log(data);
-	/*
-	Cubes.findOne({_id:data.idcube},function(err,cube){
-      if(cube){
-        cube.contenu = data.contenu;
-        cube.twitter = data.twitter;
-        cube.email = data.mail;
-        cube.sms = data.sms;
-        cube.save(function (err) {if (err) console.log('mongo: ', err); });
-	  };
-	});
 	Users.findOne({_id:data.user},function(err,user){
 		if (err) console.log('login: ', err);
 		if (user) {	 
-   			for(var i=0;i<user.cubes.length;i++){
-				console.log(user.cubes[i]._id);
-			  if(user.cubes[i]._id == data.idcube){
-				user.cubes[i].contenu = data.contenu;
-		        user.cubes[i].twitter = data.twitter;
-		        user.cubes[i].email = data.mail;
-		        user.cubes[i].sms = data.sms;
-				user.save(function (err) {if (err) console.log('mongo: ', err); });
-			  };
-			};
+			user.nom = data.nom;
+		    user.prenom = data.prenom;
+		    user.mail = data.mail;
+		    user.tel = data.sms;
+			user.mdp = data.mdp;
+			user.twitter = data.twitter;
+			user.save(function (err) {if (err) console.log('mongo: ', err); });
 		};
-	});*/
+	  });
   });
+	// End of socket
 });
 
 /*******************
@@ -154,12 +143,12 @@ app.get('/', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('index',{
 	  layout: 'layoutFront',
-	  title: "cubi'z"
+	  title: "Restez connectée avec vos enfants"
 	});
   }else{
     res.render('index', {
       layout: 'layoutFront_co',
-      title: "cubi'z"
+      title: "Restez connectée avec vos enfants"
     });
   };
 });
@@ -171,12 +160,12 @@ app.get('/fonctionnement', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('fonctionnement',{
 	  layout: 'layoutFront',
-	  title: "fonctionnement"
+	  title: "Fonctionnement"
 	});
   }else{
     res.render('fonctionnement', {
       layout: 'layoutFront_co',
-      title: "fonctionnement"
+      title: "Fonctionnement"
     });
   };
 });
@@ -188,12 +177,12 @@ app.get('/produits', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('produits',{
 	  layout: 'layoutFront',
-	  title: "produits"
+	  title: "Produits"
 	});
   }else{
     res.render('produits', {
       layout: 'layoutFront_co',
-      title: "produits"
+      title: "Produits"
     });
   };
 });
@@ -205,12 +194,12 @@ app.get('/contact', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('contact',{
 	  layout: 'layoutFront',
-	  title: "contact"
+	  title: "Contact"
 	});
   }else{
     res.render('contact', {
       layout: 'layoutFront_co',
-      title: "contact"
+      title: "Contact"
     });
   };
 });
@@ -222,12 +211,12 @@ app.get('/faq', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('faq',{
 	  layout: 'layoutFront',
-	  title: "faq"
+	  title: "Faq"
 	});
   }else{
     res.render('faq', {
       layout: 'layoutFront_co',
-      title: "faq"
+      title: "Faq"
     });
   };
 });
@@ -239,12 +228,12 @@ app.get('/mentions', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('mentions',{
 	  layout: 'layoutFront',
-	  title: "mentions"
+	  title: "Mentions"
 	});
   }else{
     res.render('mentions', {
       layout: 'layoutFront_co',
-      title: "mentions"
+      title: "Mentions"
     });
   };
 });
@@ -257,12 +246,12 @@ app.get('/plandusite', function(req, res){
   if(!req.cookies.rememberme){
 	res.render('plandusite',{
 	  layout: 'layoutFront',
-	  title: "plandusite"
+	  title: "Plandusite"
 	});
   }else{
     res.render('plandusite', {
       layout: 'layoutFront_co',
-      title: "plandusite"
+      title: "Plandusite"
     });
   };
 });
@@ -326,7 +315,7 @@ app.post('/admin', function(req, res){
 // Permet l'affichage d'ajout de socle
 app.get('/admin', function(req, res){
   res.render('admin',{
-	title: 'admin',
+	title: 'Admin',
   });
 });
 
@@ -356,7 +345,7 @@ app.post('/addUser', function(req, res){
 	}else{
   	  res.render('addUser',{
 		layout: 'layoutFront',
-		title: 'addUser'
+		title: 'AddUser'
 	  });
 	};
   });
@@ -449,6 +438,9 @@ app.get('/rfid', function(req, res){
 	  	  user.Timeline.push(message);
 	  	  user.save(function (err) { if (err) console.log('mongo: ', err); });
 	  	}
+	  socket.emit('message', { 
+		cube: cube 
+	  });
 	  if(cube.twitter){
 		/*
 		  CODE POUR TWITTER :(

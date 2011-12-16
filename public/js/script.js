@@ -7,7 +7,8 @@ $(function charge(){
 	* Socket.IO  *
 	*************/
 	var content,a=true,media=false;
-	var socket = io.connect('http://www.cubiz.fr:3000');
+	//var socket = io.connect('http://www.cubiz.fr:3000');
+	var socket = io.connect('http://localhost:3000/');
 	
 	/* MODIFICATION D'UN CUBZ */
 	overlay = $('.overlay');
@@ -85,15 +86,36 @@ $(function charge(){
 	/* MODIFICATION D'UN USER */
 	$('.validinfo').click(function(){
 		$this = $(this);
-		boite = $this.parent().parent();
+		boite = $this.parent();
 		console.log(boite);
 		socket.emit('save_user', {
-			/*user:boite.find('.bts').attr('id'),
-			idcube:boite.find('.boitecube').attr('id'),
-			contenu:content,
-			twitter:twitter,
-			sms:sms,
-			mail:mail*/
+			prenom:boite.find('.prenom').attr('value'),
+			nom:boite.find('.nom').attr('value'),
+			twitter:boite.find('.twit').attr('value'),
+			sms:boite.find('.tel').attr('value'),
+			mdp:boite.find('.mdp').attr('value'),
+			mail:boite.find('.email').attr('value'),
+			user:$this.attr('id')
 		});
+		return false;
+	});
+	
+	/* LIVE ACTU*/
+	socket.on('message', function (data) {
+		twit = data.twitter?'cercle-social-afficher':'cercle-social-masquer';
+		sms = data.sms?'cercle-social-afficher':'cercle-social-masquer';
+		mail = data.email?'cercle-social-afficher':'cercle-social-masquer';
+		$('#actu').prepend('<div class="box-actu clearfix">'+
+			'<span class="cube-actu '+data.couleur+'"></span>'+
+			'<div id="border-actu"></div>'+
+			'<span class="date">Nouveau message</span>'+
+			'<p>'+data.contenu+'</p>'+
+			'<div id="support">'+
+				'<span class="twitter '+twit+'"></span>'+
+				'<span class="mail '+sms+'"></span>'+
+				'<span class="sms '+mail+'"></span>'+	
+			'</div>'+
+		'</div>');
+	    console.log(data);
 	});
 });
