@@ -102,14 +102,14 @@ $(function charge(){
 	
 	/* LIVE ACTU*/
 	socket.on('message', function (data) {
-		twit = data.twitter?'cercle-social-afficher':'cercle-social-masquer';
-		sms = data.sms?'cercle-social-afficher':'cercle-social-masquer';
-		mail = data.email?'cercle-social-afficher':'cercle-social-masquer';
+		twit = data.cube.twitter?'cercle-social-afficher':'cercle-social-masquer';
+		sms = data.cube.sms?'cercle-social-afficher':'cercle-social-masquer';
+		mail = data.cube.email?'cercle-social-afficher':'cercle-social-masquer';
 		$('#actu').prepend('<div class="box-actu clearfix">'+
-			'<span class="cube-actu '+data.couleur+'"></span>'+
+			'<span class="cube-actu '+data.cube.couleur+'"></span>'+
 			'<div id="border-actu"></div>'+
 			'<span class="date">Nouveau message</span>'+
-			'<p>'+data.contenu+'</p>'+
+			'<p>'+data.cube.contenu+'</p>'+
 			'<div id="support">'+
 				'<span class="twitter '+twit+'"></span>'+
 				'<span class="mail '+sms+'"></span>'+
