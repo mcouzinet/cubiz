@@ -222,18 +222,15 @@ src: url("../assets/fonts/DINNeuzeitGroteskStd-Light.otf") format("opentype");
 font-family: Conga;
 src: url("../assets/fonts/CongaBravaStencilStd-Reg.otf") format("opentype");
 }
-
 body{
 	font-family:Helvetica, Helvetica Neue, Arial, sans-serif;
 	background-color: #fff;
 	text-align: justify;
 	}
-
 a{
 	color:#ffa8a8;
 	text-decoration:none;
 }
-
 
 /* boite de login*/
 #login {
@@ -388,14 +385,6 @@ header .logo{
 	position: absolute;
 	top: -30px;
 	}
-
-/* mise en forme du footer */
-
-html, body, #wrap {height: 100%;}
-
-body > #wrap {height: auto; min-height: 100%;}
-
-#main {padding-bottom: 150px;}  /* must be same height as the footer */
 	
 /* footer */
 footer nav a {
@@ -441,6 +430,107 @@ footer {
 	width: 100%;
 }
 
+
+/* Home */
+#home .nuage {
+	position:relative;
+	background-color: #d5eef3;
+	z-index: 1;
+	min-height: 270px;
+}
+#home .nuage:before {
+	content:'';
+	position:absolute;
+	display:block;
+	width:100%;
+	bottom:-61px;
+	background: url('../assets/img/nuage_bleu.png');
+	height: 61px;
+}
+#home .nuage:after {
+	content:'';
+	position:absolute;
+	display:block;
+	width:100%;
+	top:-61px;
+	background: url('../assets/img/nuage_bleu_haut.png');
+	height: 61px;
+}
+#home .nuage img {
+	position: absolute;
+	width: 364px;
+}
+#home .nuage .texte-home-droite {
+	position: relative;
+	width: 100%;
+	max-width: 600px;
+	margin-left: 380px;
+}
+#home .sans-nuage{
+	margin-top: 80px;
+	min-height: 400px;
+	position: relative;
+}
+
+#home .texte-home-gauche {
+	position: relative;
+	width: 100%;
+	max-width: 600px;
+	display: inline-block;
+}
+#home .sans-nuage img.bras-nuage {
+	position: absolute;
+	top: -80px;
+}
+#home #texte-left {
+	float: left;
+	width: 55%;
+	margin-right: 70px;
+}
+#home #image-gauche {
+	float: left;
+}
+#home #texte-left .obtenir-produit {
+	float: right;
+}
+
+#home  p{
+	font-size: 1.1em;
+	color: #6b6b6b;
+	line-height: 1.5;
+}
+
+#home article{
+	margin-top: 50px;
+}
+#home .configuration {
+	min-height: 450px;
+	margin-top: 85px;
+}
+#home .ludo {
+	margin-top: 80px;
+	padding-bottom: 40px;
+}
+.ludique {
+	margin-top: 40px;
+}
+
+#home .commesi {
+	margin-bottom: 130px;
+}
+#home article:last-child{
+	margin-top: 155px;
+}
+#home article .nuage h1{
+	color: blue;
+}
+#home .nuage h1 {
+	color: #268a9f;
+	border-left: 4px solid #268a9f;
+}
+#home .bouton-produit {
+	float:right;
+}
 
 
 /* dessin du téléphone*/
@@ -521,11 +611,6 @@ footer {
 	}
 
 /*Contenu*/
-article{
-	color: #616161;
-	width: 95%;
-	padding: 27px;
-	}
 
 article section{
 	width: 495px;
@@ -994,6 +1079,7 @@ div.cercle2
 	top: 220px;
 	left: 78%;
 } 
+
 /* Sitemap */
 ul.sitemap{
 padding-left: 10px;
@@ -1088,85 +1174,115 @@ input[type="text"], input[type="email"]{
 }
 
 /*Div placeholders*/
-article figure.img1
+/*MAJ*/ 
+article figure.img7
 {
-	width: 166px;
-	height: 247px;
-	background-image: url('../img/bebe.png');
+	width: 364px;
+	height: 331px;
+	background: url('../img/cubes-home.png') no-repeat;
 	position: relative;
-	left: 200px;
-	top: 190px;
+	top: 0px;
+
 }
 
-article figure.img1+div
+article figure.img8
 {
-	width: 159px;
-	height: 368px;
-	background-image: url('../img/bebe2.png');
+	width: 347px;
+	height: 413px;
+	background: url('../img/main-cube.png') no-repeat;
 	position: relative;
-	left: -190px;
-	top: -90px;
+	top: -73px;
 }
 
-article figure.img2
+article figure.img9
 {
-	width: 395px;
-	height: 268px;
-	background-image: url('../img/main_cube.png');
-	background-position: 20px -35px;
-	background-repeat: no-repeat;
+	width: 283px;
+	height: 316px;
+	background: url('../img/main-iphone.png') no-repeat;
+	position: relative;
+	top: 0px;
+
+}
+
+article figure.img10
+{
+	width: 290px;
+	height: 418px;
+	background: url('../img/mere-enfant.png') no-repeat;
 	position: relative;
 	top: 0px;
 }
-
-article figure.img3
+article figure.img11
 {
-	width: 381px;
-	height: 425px;
-	background-image: url('../img/main_tel.png');
-	background-position: -80px 20px;
-	background-repeat: no-repeat;
+	width: 369px;
+	height: 189px;
+	background: url('../img/socle.png') no-repeat;
 	position: relative;
-	top: 0px;
+	top: 40px;
 }
-
-article figure.img4
+article figure.img12
+{
+	width: 319px;
+	height: 186px;
+	background: url('../img/screenshot.png') no-repeat;
+	position: relative;
+	top: 90px;
+}
+article figure.img13
+{
+	width: 319px;
+	height: 285px;
+	background: url('../img/cubz.png') no-repeat;
+	position: relative;
+	top: 90px;
+}
+article figure.img14
+{
+	width: 413px;
+	height: 347px;
+	background: url('../img/main.png') no-repeat;
+	position: relative;
+	top: -95px;
+}
+article figure.img15
+{
+	width: 285px;
+	height: 315px;
+	background: url('../img/main-sms.png') no-repeat;
+	position: relative;
+	top: 50px;
+}
+article figure.img16
 {
 	width: 290px;
 	height: 471px;
+	background: url('../img/embrasse-enfant.png') no-repeat;
 	position: relative;
-	background-image: url('../img/mere.png');
-	background-repeat: no-repeat;
-	top: 0px;
-	float: right;
+	top: 50px;
 }
-
-article div.img6
+article figure.img7 {
+width: 364px;
+height: 331px;
+background: url('../img/cubes-home.png') no-repeat;
+position: relative;
+top: 0px;
+}
+article figure.img18
 {
-	height: 160px;
-	width: 160px;
-	background-image: url('../img/bouton.png');
-	background-repeat: no-repeat;
-	-moz-border-radius:90px;
-	-webkit-border-radius:90px;
+	width: 369px;
+	height: 189px;
+	background: url('../img/socle.png') no-repeat;
 	position: relative;
-	left: 350px;
-	top: 230px;
+	top: 150px;
 }
-
-article div.img6 p
+article figure.img19
 {
-	font-size: 24px;
-	width: 80px;
-	color: white;
+	width: 319px;
+	height: 285px;
+	background: url('../img/cubz.png') no-repeat;
 	position: relative;
-	top: -170px;
-	left: 45px;
-	font-family: KewlScript;
-	text-align: center;
+	top: 100px;
 }
-
-
 article.cubiz
 {
 	width: 500px;
@@ -1207,45 +1323,7 @@ p.connectee
 	bottom: 10px;
 	width: 206px;
 }
-/*MAJ*/ 
-article figure.img7
-{
-	width: 301px;
-	height: 194px;
-	background-color: lightgrey;
-	position: relative;
-	top: 80px;
 
-}
-
-article figure.img8
-{
-	width: 377px;
-	height: 194px;
-	background-color: lightgrey;
-	position: relative;
-	top: 100px;
-}
-
-article figure.img9
-{
-	width: 308px;
-	height: 230px;
-	background-color: lightgrey;
-	position: relative;
-	top: 100px;
-
-}
-
-article figure.img10
-{
-	width: 398px;
-	height: 347px;
-	background-color: lightgrey;
-	position: relative;
-	top: -25px;
-
-}
 
 /* =============================================================================
    Non-semantic helper classes
