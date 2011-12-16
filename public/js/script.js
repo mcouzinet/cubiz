@@ -7,7 +7,7 @@ $(function charge(){
 	* Socket.IO  *
 	*************/
 	var content,a=true,media=false;
-	var socket = io.connect('http://localhost:3000');
+	var socket = io.connect('http://www.cubiz.fr:3000');
 	
 	/* MODIFICATION D'UN CUBZ */
 	overlay = $('.overlay');

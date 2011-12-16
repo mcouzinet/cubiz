@@ -397,7 +397,7 @@ footer nav a {
 }
 footer nav{
 	margin:0 auto;
-	max-width:450px;
+	max-width:705px;
 }
 footer nav a:visited {
 	color: #fafafa;
@@ -914,7 +914,8 @@ div.icone1
 }
 
 .box-infos hr{
-	border-color: #268194;
+	border-color: #f3e3e6;
+	background-color:#fb516a;
 }
 
 .bts{
